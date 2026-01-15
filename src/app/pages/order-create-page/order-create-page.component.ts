@@ -7,7 +7,7 @@ import { InputDateComponent } from '../../components/input-date/input-date.compo
 import { InputSelectComponent, SelectOption } from '../../components/input-select/input-select.component';
 import { InputComponent } from '../../components/input/input.component';
 import { IngredientInterface } from '../../core/interfaces/ingredient.interface';
-import { dateRangeValidator } from '../../core/validators/date-range.validator';
+import { dateRangeValidator } from '../../core/validators/date-range/date-range.validator';
 import { OrderService } from '../../services/order.service';
 import { IngredientsTable } from './components/ingredients-table/ingredients-table.component';
 
@@ -17,7 +17,8 @@ enum Steps {
 }
 
 @Component({
-  imports: [CardModule, InputComponent, InputDateComponent, InputSelectComponent, ReactiveFormsModule, ButtonModule, IngredientsTable, RouterLink],
+  imports: [CardModule, InputComponent, InputDateComponent, InputSelectComponent,
+    ReactiveFormsModule, ButtonModule, IngredientsTable, RouterLink],
   templateUrl: './order-create-page.component.html',
   styleUrl: './order-create-page.component.css',
 })
@@ -45,6 +46,7 @@ export class OrderCreatePage implements OnInit {
     { label: 'Наличными', value: 'cash' },
     { label: 'Картой', value: 'card' },
     { label: 'Онлайн', value: 'online' },
+    { label: 'Криптовалютой', value: 'crypto' },
   ];
 
   public ngOnInit(): void {
@@ -73,7 +75,7 @@ export class OrderCreatePage implements OnInit {
     }
   }
 
-  public onSubmitIngredients(data: IngredientInterface[]): void {
+  public onSubmitIngredients(data: { ingredients: IngredientInterface[], totalPrice: number }): void {
     this.isShowExplosion = true;
 
     setTimeout(() => {
@@ -82,7 +84,8 @@ export class OrderCreatePage implements OnInit {
       this.orderService.addOrder({
         ...this.form.value,
         id: crypto.randomUUID(),
-        ingredients: data,
+        ingredients: data.ingredients,
+        totalPrice: data.totalPrice,
       });
 
       this.router.navigate(['/orders']);

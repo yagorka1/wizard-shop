@@ -15,8 +15,7 @@ export class OrderService {
 
   private loadFromStorage(): void {
     const ordersJson = localStorage.getItem(this.localStorageKey);
-    const orders = ordersJson ? JSON.parse(ordersJson) : [];
-    this.orders = orders;
+    this.orders = ordersJson ? JSON.parse(ordersJson) : [];
   }
 
   private saveToStorage(): void {

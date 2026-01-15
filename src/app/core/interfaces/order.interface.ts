@@ -9,5 +9,6 @@ export interface OrderInterface {
   address: string;
   delivery: string;
   payment: string;
+  totalPrice?: number;
   ingredients?: IngredientInterface[];
 }

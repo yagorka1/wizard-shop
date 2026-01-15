@@ -8,7 +8,6 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -17,8 +16,8 @@ import { TableModule } from 'primeng/table';
 import { InputComponent } from '../../../../components/input/input.component';
 import { magicalIngredients } from '../../../../core/constants/ingredients.constants';
 import { IngredientInterface } from '../../../../core/interfaces/ingredient.interface';
-import { minIngredientsValidator } from '../../../../core/validators/min-ingredients.validator';
-import { totalPercentValidator } from '../../../../core/validators/total-percent.validator';
+import { minIngredientsValidator } from '../../../../core/validators/min-ingredients/min-ingredients.validator';
+import { totalPercentValidator } from '../../../../core/validators/total-percent/total-percent.validator';
 
 interface MagicalIngredient {
   id: number;
@@ -30,12 +29,13 @@ interface MagicalIngredient {
 
 @Component({
   selector: 'app-ingredients-table',
-  imports: [CardModule, TableModule, InputTextModule, CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputComponent, RouterLink, CheckboxModule],
+  imports: [CardModule, TableModule, InputTextModule, CommonModule, FormsModule,
+     ReactiveFormsModule, ButtonModule, InputComponent, CheckboxModule],
   templateUrl: './ingredients-table.component.html',
   styleUrl: './ingredients-table.component.css',
 })
 export class IngredientsTable implements OnInit {
-  @Output() public onSubmit: EventEmitter<IngredientInterface[]> = new EventEmitter<IngredientInterface[]>();
+  @Output() public onSubmit: EventEmitter<{ ingredients: IngredientInterface[], totalPrice: number }> = new EventEmitter<{ ingredients: IngredientInterface[], totalPrice: number }>();
 
   @Output() public onBack: EventEmitter<void> = new EventEmitter<void>();
 
@@ -163,7 +163,7 @@ export class IngredientsTable implements OnInit {
         };
       });
 
-      this.onSubmit.emit(ingredients);
+      this.onSubmit.emit({ ingredients, totalPrice: this.totalPrice });
     }
   }
 
