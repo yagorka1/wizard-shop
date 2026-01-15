@@ -1,0 +1,22 @@
+<div class="flex flex-col" [ngClass]="{'h-12': label, 'h-8': !label }">
+  <p-floatlabel variant="on" class="h-8">
+    <input
+      pInputText
+      class="w-full h-8"
+      [(ngModel)]="value"
+      [id]="id"
+      (ngModelChange)="onChange($event)"
+      (blur)="onTouched()"
+      autocomplete="off"
+      [placeholder]="placeholder"
+      [invalid]="isShowError"
+    />
+    <label [for]="id">{{ label }}</label>
+  </p-floatlabel>
+
+  <small class="text-red-500 block h-4 text-xs leading-4">
+    @if (isShowError) {
+      <span>{{ errorMessage }}</span>
+    }
+  </small>
+</div>

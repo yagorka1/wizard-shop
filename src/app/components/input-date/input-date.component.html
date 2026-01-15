@@ -1,0 +1,23 @@
+<div class="flex flex-col h-12 w-full">
+  <p-floatlabel variant="on" class="w-full h-8">
+    <p-datepicker
+      [(ngModel)]="value"
+      [id]="id"
+      placeholder=""
+      [invalid]="isShowError"
+      (ngModelChange)="onChange($event)"
+      (blur)="onTouched()"
+      class="w-full h-8"
+      fluid
+      showIcon
+      iconDisplay="input"
+    />
+    <label [for]="id">{{ label }}</label>
+  </p-floatlabel>
+
+  <small class="text-red-500 block h-4 text-xs leading-4">
+    @if (isShowError) {
+      <span>{{ errorMessage }}</span>
+    }
+  </small>
+</div>

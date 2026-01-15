@@ -1,0 +1,23 @@
+<div class="flex flex-col h-12">
+  <p-floatlabel variant="on" class="h-8">
+    <p-select
+      [(ngModel)]="value"
+      [id]="id"
+      [options]="options"
+      optionLabel="label"
+      optionValue="value"
+      [invalid]="isShowError"
+      (ngModelChange)="onChange($event)"
+      (onBlur)="onTouched()"
+      class="w-full h-8"
+      fluid
+    />
+    <label [for]="id">{{ label }}</label>
+  </p-floatlabel>
+
+  <small class="text-red-500 block h-4 text-xs leading-4">
+    @if (isShowError) {
+      <span>{{ errorMessage }}</span>
+    }
+  </small>
+</div>

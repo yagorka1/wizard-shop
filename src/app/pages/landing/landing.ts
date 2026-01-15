@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
   selector: 'app-landing',
   imports: [RouterModule],
   templateUrl: './landing.html',
-  styleUrl: './landing.css',
 })
 export class Landing {
 

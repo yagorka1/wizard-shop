@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { AfterViewInit, Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -7,6 +7,16 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
+export class App implements AfterViewInit {
   protected readonly title = signal('wizard-shop');
+
+  public ngAfterViewInit(): void {
+    const video = document.querySelector('video');
+
+    if (video) {
+      video.muted = true;
+      video.volume = 0; 
+      video.play();
+    }
+  }
 }
