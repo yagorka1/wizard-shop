@@ -1,7 +1,24 @@
 @if (step === steps.ORDER) {
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="flex items-center justify-center min-h-screen">
-      <p-card header="Закажи свое зелье!" class="mb-0 w-1/2 max-w-xl rounded-xl">
+      <p-card
+        class="mb-0 w-[90%] sm:w-full max-w-xl rounded-xl"
+      >
+
+        <ng-template pTemplate="header">
+          <div class="flex items-center justify-between w-full p-6">
+            <span class="text-xl font-semibold">
+              Закажи свое зелье!
+            </span>
+
+            <p-button
+              severity="secondary"
+              label="Назад"
+              [routerLink]="'/orders'"
+              styleClass="mb-4"
+            />
+          </div>
+        </ng-template>
 
         <div class="flex flex-col gap-3">
           <app-input class="w-full" label="Номер зелья" formControlName="number"></app-input>

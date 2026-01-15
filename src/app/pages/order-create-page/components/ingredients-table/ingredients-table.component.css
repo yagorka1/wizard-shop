@@ -1,3 +1,12 @@
 .align-top {
-  height: 62px;
+  vertical-align: top;
+}
+
+td.align-middle {
+  vertical-align: middle;
+  height: 56px;
+}
+
+.input-wrapper {
+  min-height: 32px;
 }

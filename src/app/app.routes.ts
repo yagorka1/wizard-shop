@@ -1,19 +1,19 @@
 import { Routes } from '@angular/router';
 import { Landing } from './pages/landing/landing';
 import { OrderCreatePage } from './pages/order-create-page/order-create-page.component';
-import { OrdersPage } from './pages/orders-page/orders-page';
+import { OrdersPageComponent } from './pages/orders-page/orders-page.component';
 
 export const routes: Routes = [
     {
         path: '',
-        component: Landing
+        component: Landing,
     },
     {
         path: 'orders',
-        component: OrdersPage
+        component: OrdersPageComponent,
     },
     {
         path: 'order-create',
-        component: OrderCreatePage
+        component: OrderCreatePage,
     }
 ];

@@ -6,4 +6,5 @@ export const ERROR_MESSAGES: Record<string, (error?: any) => string> = {
   pattern: () => 'Неверный формат',
   min: (e) => `Минимум ${e.min}`,
   max: (e) => `Максимум ${e.max}`,
+  dateRange: () => 'Дата не может быть раньше даты заказа',
 };
