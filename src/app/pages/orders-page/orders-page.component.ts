@@ -34,6 +34,7 @@ export class OrdersPageComponent {
     cash: 'Наличными',
     card: 'Картой',
     online: 'Онлайн',
+    crypto: 'Криптовалютой',
   };
 
   public ngOnInit(): void {

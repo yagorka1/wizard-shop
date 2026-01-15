@@ -30,7 +30,7 @@ export class InputDateComponent {
 
   @Input() formControlName = '';
 
-  @Input() id = crypto.randomUUID();
+  public id = crypto.randomUUID();
 
   public value = '';
 
