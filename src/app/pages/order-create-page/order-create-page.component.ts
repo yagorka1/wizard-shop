@@ -89,7 +89,7 @@ export class OrderCreatePage implements OnInit {
       });
 
       this.router.navigate(['/orders']);
-    }, 2500);
+    }, 1000);
 
   }
 

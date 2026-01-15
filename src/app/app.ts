@@ -15,7 +15,7 @@ export class App implements AfterViewInit {
 
     if (video) {
       video.muted = true;
-      video.volume = 0; 
+      video.volume = 0;
       video.play();
     }
   }
