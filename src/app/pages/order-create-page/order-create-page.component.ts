@@ -1,14 +1,15 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputDateComponent } from '../../components/input-date/input-date.component';
 import { InputSelectComponent, SelectOption } from '../../components/input-select/input-select.component';
 import { InputComponent } from '../../components/input/input.component';
 import { IngredientInterface } from '../../core/interfaces/ingredient.interface';
-import { IngredientsTable } from './components/ingredients-table/ingredients-table.component';
+import { dateRangeValidator } from '../../core/validators/date-range.validator';
 import { OrderService } from '../../services/order.service';
-import { Router } from '@angular/router';
+import { IngredientsTable } from './components/ingredients-table/ingredients-table.component';
 
 enum Steps {
   ORDER,
@@ -16,7 +17,7 @@ enum Steps {
 }
 
 @Component({
-  imports: [CardModule, InputComponent, InputDateComponent, InputSelectComponent, ReactiveFormsModule, ButtonModule, IngredientsTable],
+  imports: [CardModule, InputComponent, InputDateComponent, InputSelectComponent, ReactiveFormsModule, ButtonModule, IngredientsTable, RouterLink],
   templateUrl: './order-create-page.component.html',
   styleUrl: './order-create-page.component.css',
 })
@@ -59,6 +60,8 @@ export class OrderCreatePage implements OnInit {
       address: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       delivery: ['courier', [Validators.required]],
       payment: ['card', [Validators.required]],
+    }, {
+      validators: [dateRangeValidator('date', 'readyDate')]
     });
   }
 
@@ -83,7 +86,7 @@ export class OrderCreatePage implements OnInit {
       });
 
       this.router.navigate(['/orders']);
-    }, 3000);
+    }, 2500);
 
   }
 

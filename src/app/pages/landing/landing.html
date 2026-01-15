@@ -1,13 +1,14 @@
 <div class="flex flex-col h-screen font-sans text-white overflow-hidden">
 
   <section class="flex-1 flex flex-col justify-center items-center text-center px-4">
-    <h1 class="text-4xl md:text-5xl font-bold mb-2 drop-shadow-lg">Лавка зелий мага</h1>
-    <p class="text-lg md:text-xl mb-4 drop-shadow-md">Заказывай магические зелья!</p>
+    <h1 class="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg text-red-600">Лавка зелий мага</h1>
+
     <div class="flex flex-col md:flex-row gap-2">
       <a routerLink="/order-create"
          class="bg-yellow-400 hover:bg-yellow-500 text-purple-900 font-bold py-2 px-6 rounded-xl shadow-lg transition cursor-pointer">
         Заказать зелье
       </a>
+
       <a routerLink="/orders"
          class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-xl shadow-lg transition cursor-pointer">
         Посмотреть заказы
@@ -22,11 +23,13 @@
         <h3 class="text-lg md:text-xl font-bold mb-1">Быстрая доставка</h3>
         <p class="text-sm md:text-base">Доставка ваших зелий мгновенно и безопасно.</p>
       </div>
+
       <div class="p-3 md:p-4 bg-purple-700 rounded-xl shadow-lg hover:scale-105 transition">
         <i class="pi pi-star-fill text-3xl mb-1"></i>
         <h3 class="text-lg md:text-xl font-bold mb-1">Волшебные ингредиенты</h3>
         <p class="text-sm md:text-base">Только редкие и магические ингредиенты.</p>
       </div>
+
       <div class="p-3 md:p-4 bg-purple-700 rounded-xl shadow-lg hover:scale-105 transition">
         <i class="pi pi-credit-card text-3xl mb-1"></i>
         <h3 class="text-lg md:text-xl font-bold mb-1">Безопасная оплата</h3>
@@ -35,7 +38,7 @@
     </div>
   </section>
 
-  <footer class="flex-none text-white py-2 md:py-4 text-center text-sm md:text-base">
+  <footer class="flex-none text-black py-2 md:py-4 text-center text-sm md:text-base">
     <p>&copy; 2026 Лавка зелий мага. Все права защищены.</p>
   </footer>
 </div>

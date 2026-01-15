@@ -1,89 +1,77 @@
 <div class="flex items-center justify-center min-h-screen p-4">
-  <p-card header="Ингредиенты" class="mb-0 w-full lg:w-1/2 rounded-xl relative">
-    <div class="mb-1">
-      <p-button
-        severity="secondary"
-        label="Назад"
-        (onClick)="goBack()"
-        styleClass="mb-4"
-      />
-    </div>
+  <p-card class="mb-0 w-full max-w-[1200px] rounded-xl relative">
+    <ng-template pTemplate="header">
+      <div class="flex items-center justify-between w-full p-6">
+      <span class="text-xl font-semibold">
+       Выберите ингредиенты
+      </span>
+
+        <p-button
+          severity="secondary"
+          label="Назад"
+          (onClick)="goBack()"
+          styleClass="mb-4"
+        />
+      </div>
+    </ng-template>
+
     <ng-container [formGroup]="form">
-      <p-table [value]="ingredientsControls" [tableStyle]="{'min-width': '50rem'}">
+      <p-table [value]="ingredientsControls" [tableStyle]="{'min-width': '60rem'}" class="h-[50vh] overflow-y-auto">
         <ng-template pTemplate="header">
           <tr>
-            <th style="width:30%">Название ингредиента</th>
-            <th style="width:20%">Цена за 100 грамм</th>
-            <th style="width:20%">Процент</th>
-            <th style="width:30%">Действия</th>
+            <th style="width:5%">Выбрать</th>
+            <th style="width:20%">Название</th>
+            <th style="width:12%">Редкость</th>
+            <th style="width:25%">Эффект</th>
+            <th style="width:12%">Цена за 100г</th>
+            <th style="width:15%">Процент</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-group let-ri="rowIndex">
-          <tr [formGroup]="group">
-            <td class="align-top">
-              @if (isEditing(ri)) {
-                <div class="flex flex-col gap-1 input-wrapper">
-                  <app-input formControlName="name" placeholder="Название"></app-input>
-                </div>
-              } @else {
-                {{ group.get('name')?.value }}
-              }
+          <tr [formGroup]="group" [class.bg-green-50]="group.get('selected')?.value">
+            <td class="align-middle">
+              <p-checkbox
+                formControlName="selected"
+                [binary]="true"
+                (onChange)="onSelectionChange(ri)"
+              />
             </td>
 
-            <td class="align-top">
-              @if (isEditing(ri)) {
-                <div class="flex flex-col gap-1 input-wrapper">
-                  <app-input formControlName="price" placeholder="Цена" type="number"></app-input>
-                </div>
-              } @else {
-                {{ group.get('price')?.value | number:'1.2-2' }} РУБ
-              }
+            <td class="align-middle font-medium">
+              {{ group.get('name')?.value }}
             </td>
 
-            <td class="align-top">
-              @if (isEditing(ri)) {
-                <div class="flex flex-col gap-1 input-wrapper">
+            <td class="align-middle">
+              <span 
+                class="px-2 py-1 rounded text-xs font-medium"
+                [ngClass]="{
+                  'bg-gray-200 text-gray-700': group.get('rarity')?.value === 'обычный',
+                  'bg-green-200 text-green-700': group.get('rarity')?.value === 'необычный',
+                  'bg-blue-200 text-blue-700': group.get('rarity')?.value === 'редкий',
+                  'bg-purple-200 text-purple-700': group.get('rarity')?.value === 'очень редкий',
+                  'bg-orange-200 text-orange-700': group.get('rarity')?.value === 'легендарный'
+                }"
+              >
+                {{ group.get('rarity')?.value }}
+              </span>
+            </td>
+
+            <td class="align-middle text-sm text-gray-600">
+              {{ group.get('effect')?.value }}
+            </td>
+
+            <td class="align-middle">
+              {{ group.get('price')?.value | number:'1.2-2' }} РУБ
+            </td>
+
+            <td class="align-middle">
+              <div class="input-wrapper" style="min-height: 32px;">
+                @if (group.get('selected')?.value) {
                   <app-input formControlName="percent" placeholder="%" type="number"></app-input>
-                </div>
-              } @else {
-                {{ group.get('percent')?.value }} %
-              }
-            </td>
-
-            <td class="align-top">
-              <div class="flex items-center justify-start gap-2">
-                @if (!isEditing(ri)) {
-                  <p-button
-                    severity="secondary"
-                    label="Изменить"
-                    styleClass="h-8"
-                    size="small"
-                    (onClick)="startEdit(ri)"
-                  />
-                  <p-button
-                    severity="danger"
-                    label="Удалить"
-                    styleClass="h-8"
-                    size="small"
-                    (onClick)="deleteIngredient(ri)"
-                  />
                 } @else {
-                  <p-button
-                    severity="success"
-                    label="Сохранить"
-                    size="small"
-                    styleClass="h-8"
-                    (onClick)="saveEdit(ri)"
-                    [disabled]="group.invalid"
-
-                  />
-                  <p-button
-                    severity="secondary"
-                    label="Отменить"
-                    styleClass="h-8"
-                    size="small"
-                    (onClick)="cancelEdit(ri)"
-                  />
+                  <div class="h-8 flex items-center">
+                    <span class="text-gray-400">—</span>
+                  </div>
                 }
               </div>
             </td>
@@ -92,14 +80,17 @@
       </p-table>
     </ng-container>
 
-    <p-button
-      severity="secondary"
-      outlined="true"
-      class="block mt-6"
-      size="small"
-      label="Добавить ингредиент"
-      (onClick)="addIngredient()"
-    />
+    <div class="mt-6 p-4 bg-gray-100 rounded-lg">
+      <div class="flex justify-between items-center flex-wrap gap-4">
+        <span class="font-medium">Выбрано ингредиентов: {{ selectedIngredients.length }}</span>
+        <span class="font-medium" [class.text-green-600]="totalPercent === 100" [class.text-red-600]="totalPercent !== 100">
+          Общий процент: {{ totalPercent }}%
+        </span>
+        <span class="font-medium text-blue-600">
+          Итого: {{ totalPrice | number:'1.2-2' }} РУБ
+        </span>
+      </div>
+    </div>
 
     @if (tableErrors.length > 0) {
       <div class="mt-4 p-4 bg-red-100 rounded-lg text-red-700">
@@ -108,12 +99,6 @@
             <li>{{ error }}</li>
           }
         </ul>
-      </div>
-    }
-
-    @if (hasEditingIngredients && tableErrors.length === 0) {
-      <div class="mt-4 p-4 bg-yellow-100 rounded-lg text-yellow-700">
-        <p>Пожалуйста, сохраните все ингредиенты перед оформлением заказа</p>
       </div>
     }
 
