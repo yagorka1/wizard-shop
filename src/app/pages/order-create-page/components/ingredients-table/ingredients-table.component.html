@@ -1,0 +1,131 @@
+<div class="flex items-center justify-center min-h-screen p-4">
+  <p-card header="Ингредиенты" class="mb-0 w-full lg:w-1/2 rounded-xl relative">
+    <div class="mb-1">
+      <p-button
+        severity="secondary"
+        label="Назад"
+        (onClick)="goBack()"
+        styleClass="mb-4"
+      />
+    </div>
+    <ng-container [formGroup]="form">
+      <p-table [value]="ingredientsControls" [tableStyle]="{'min-width': '50rem'}">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width:30%">Название ингредиента</th>
+            <th style="width:20%">Цена за 100 грамм</th>
+            <th style="width:20%">Процент</th>
+            <th style="width:30%">Действия</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-group let-ri="rowIndex">
+          <tr [formGroup]="group">
+            <td class="align-top">
+              @if (isEditing(ri)) {
+                <div class="flex flex-col gap-1 input-wrapper">
+                  <app-input formControlName="name" placeholder="Название"></app-input>
+                </div>
+              } @else {
+                {{ group.get('name')?.value }}
+              }
+            </td>
+
+            <td class="align-top">
+              @if (isEditing(ri)) {
+                <div class="flex flex-col gap-1 input-wrapper">
+                  <app-input formControlName="price" placeholder="Цена" type="number"></app-input>
+                </div>
+              } @else {
+                {{ group.get('price')?.value | number:'1.2-2' }} РУБ
+              }
+            </td>
+
+            <td class="align-top">
+              @if (isEditing(ri)) {
+                <div class="flex flex-col gap-1 input-wrapper">
+                  <app-input formControlName="percent" placeholder="%" type="number"></app-input>
+                </div>
+              } @else {
+                {{ group.get('percent')?.value }} %
+              }
+            </td>
+
+            <td class="align-top">
+              <div class="flex items-center justify-start gap-2">
+                @if (!isEditing(ri)) {
+                  <p-button
+                    severity="secondary"
+                    label="Изменить"
+                    styleClass="h-8"
+                    size="small"
+                    (onClick)="startEdit(ri)"
+                  />
+                  <p-button
+                    severity="danger"
+                    label="Удалить"
+                    styleClass="h-8"
+                    size="small"
+                    (onClick)="deleteIngredient(ri)"
+                  />
+                } @else {
+                  <p-button
+                    severity="success"
+                    label="Сохранить"
+                    size="small"
+                    styleClass="h-8"
+                    (onClick)="saveEdit(ri)"
+                    [disabled]="group.invalid"
+
+                  />
+                  <p-button
+                    severity="secondary"
+                    label="Отменить"
+                    styleClass="h-8"
+                    size="small"
+                    (onClick)="cancelEdit(ri)"
+                  />
+                }
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </ng-container>
+
+    <p-button
+      severity="secondary"
+      outlined="true"
+      class="block mt-6"
+      size="small"
+      label="Добавить ингредиент"
+      (onClick)="addIngredient()"
+    />
+
+    @if (tableErrors.length > 0) {
+      <div class="mt-4 p-4 bg-red-100 rounded-lg text-red-700">
+        <ul class="list-disc pl-5">
+          @for (error of tableErrors; track error) {
+            <li>{{ error }}</li>
+          }
+        </ul>
+      </div>
+    }
+
+    @if (hasEditingIngredients && tableErrors.length === 0) {
+      <div class="mt-4 p-4 bg-yellow-100 rounded-lg text-yellow-700">
+        <p>Пожалуйста, сохраните все ингредиенты перед оформлением заказа</p>
+      </div>
+    }
+
+    @if (canSaveOrder) {
+      <p-button
+        severity="success"
+        class="block mt-6"
+        label="Сделать заказ"
+        [disabled]="isDisableButton"
+        icon="pi pi-check"
+        (onClick)="save()"
+      />
+    }
+  </p-card>
+</div>

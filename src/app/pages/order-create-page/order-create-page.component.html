@@ -1,0 +1,51 @@
+@if (step === steps.ORDER) {
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="flex items-center justify-center min-h-screen">
+      <p-card header="Закажи свое зелье!" class="mb-0 w-1/2 max-w-xl rounded-xl">
+
+        <div class="flex flex-col gap-3">
+          <app-input class="w-full" label="Номер зелья" formControlName="number"></app-input>
+
+          <app-input class="w-full" label="Имя заказчика" formControlName="name"></app-input>
+
+          <app-input-date class="w-full" label="Дата заказа" formControlName="date"></app-input-date>
+
+          <app-input-date class="w-full" label="Дата готовности" formControlName="readyDate"></app-input-date>
+
+          <app-input class="w-full" label="Адрес доставки" formControlName="address"></app-input>
+
+          <app-input-select
+            class="w-full"
+            label="Способ доставки"
+            formControlName="delivery"
+            [options]="deliveryOptions"
+          ></app-input-select>
+
+          <app-input-select
+            class="w-full"
+            label="Способ оплаты"
+            formControlName="payment"
+            [options]="paymentOptions"
+          ></app-input-select>
+        </div>
+
+        <p-button type="submit" [disabled]="isShowExplosion" severity="success" class="block mt-6"
+                  label="Выбрать ингредиенты"/>
+      </p-card>
+    </div>
+  </form>
+}
+
+@if (step === steps.INGREDIENTS) {
+  <app-ingredients-table
+    (onSubmit)="onSubmitIngredients($event)"
+    [isDisableButton]="isShowExplosion"
+    (onBack)="onBackFromIngredients()"
+  ></app-ingredients-table>
+}
+
+@if (isShowExplosion) {
+  <video autoplay muted loop playsinline preload="auto" type="video/webm" class="explosion">
+    <source src="/explosion.webm" type="video/webm">
+  </video>
+}
