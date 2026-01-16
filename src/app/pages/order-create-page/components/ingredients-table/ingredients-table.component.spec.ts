@@ -1,7 +1,9 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { IngredientsTable } from './ingredients-table.component';
+import { IngredientInterface } from '../../../../core/interfaces/ingredient.interface';
 
 describe('IngredientsTable', () => {
   let component: IngredientsTable;
@@ -51,10 +53,10 @@ describe('IngredientsTable', () => {
       const group = component.ingredientsControls[0];
       group.get('selected')?.setValue(true);
       group.get('percent')?.setValue(50);
-      
+
       group.get('selected')?.setValue(false);
       component.onSelectionChange(0);
-      
+
       expect(group.get('percent')?.value).toBeNull();
     });
 
@@ -62,10 +64,10 @@ describe('IngredientsTable', () => {
       const group = component.ingredientsControls[0];
       group.get('selected')?.setValue(true);
       component.onSelectionChange(0);
-      
+
       group.get('percent')?.setValue(null);
       group.get('percent')?.updateValueAndValidity();
-      
+
       expect(group.get('percent')?.hasError('required')).toBe(true);
     });
   });
@@ -78,7 +80,7 @@ describe('IngredientsTable', () => {
     it('should return only selected ingredients', () => {
       component.ingredientsControls[0].get('selected')?.setValue(true);
       component.ingredientsControls[1].get('selected')?.setValue(true);
-      
+
       expect(component.selectedIngredients.length).toBe(2);
     });
   });
@@ -91,17 +93,17 @@ describe('IngredientsTable', () => {
     it('should calculate total percent correctly', () => {
       component.ingredientsControls[0].get('selected')?.setValue(true);
       component.ingredientsControls[0].get('percent')?.setValue(30);
-      
+
       component.ingredientsControls[1].get('selected')?.setValue(true);
       component.ingredientsControls[1].get('percent')?.setValue(70);
-      
+
       expect(component.totalPercent).toBe(100);
     });
 
     it('should handle null percent values', () => {
       component.ingredientsControls[0].get('selected')?.setValue(true);
       component.ingredientsControls[0].get('percent')?.setValue(null);
-      
+
       expect(component.totalPercent).toBe(0);
     });
   });
@@ -114,10 +116,10 @@ describe('IngredientsTable', () => {
     it('should calculate total price based on percent', () => {
       const group = component.ingredientsControls[0];
       const price = group.get('price')?.value;
-      
+
       group.get('selected')?.setValue(true);
       group.get('percent')?.setValue(50);
-      
+
       expect(component.totalPrice).toBe(price * 50 / 100);
     });
   });
@@ -126,7 +128,7 @@ describe('IngredientsTable', () => {
     it('should show error when less than 3 ingredients selected', () => {
       component.ingredientsControls[0].get('selected')?.setValue(true);
       component.ingredientsControls[0].get('percent')?.setValue(100);
-      
+
       expect(component.tableErrors.some(e => e.includes('минимум 3'))).toBe(true);
     });
 
@@ -135,7 +137,7 @@ describe('IngredientsTable', () => {
         component.ingredientsControls[i].get('selected')?.setValue(true);
         component.ingredientsControls[i].get('percent')?.setValue(20);
       }
-      
+
       expect(component.tableErrors.some(e => e.includes('100%'))).toBe(true);
     });
 
@@ -147,7 +149,7 @@ describe('IngredientsTable', () => {
       component.ingredientsControls[0].get('percent')?.setValue(33.33);
       component.ingredientsControls[1].get('percent')?.setValue(33.33);
       component.ingredientsControls[2].get('percent')?.setValue(33.34);
-      
+
       expect(component.tableErrors.length).toBe(0);
     });
   });
@@ -163,7 +165,7 @@ describe('IngredientsTable', () => {
         component.onSelectionChange(i);
         component.ingredientsControls[i].get('percent')?.setValue(20);
       }
-      
+
       expect(component.canSaveOrder).toBe(false);
     });
 
@@ -175,7 +177,7 @@ describe('IngredientsTable', () => {
       component.ingredientsControls[0].get('percent')?.setValue(33.33);
       component.ingredientsControls[1].get('percent')?.setValue(33.33);
       component.ingredientsControls[2].get('percent')?.setValue(33.34);
-      
+
       expect(component.canSaveOrder).toBe(true);
     });
   });
@@ -183,7 +185,7 @@ describe('IngredientsTable', () => {
   describe('save', () => {
     it('should emit onSubmit when canSaveOrder is true', () => {
       const emitSpy = vi.spyOn(component.onSubmit, 'emit');
-      
+
       for (let i = 0; i < 3; i++) {
         component.ingredientsControls[i].get('selected')?.setValue(true);
         component.onSelectionChange(i);
@@ -191,23 +193,23 @@ describe('IngredientsTable', () => {
       component.ingredientsControls[0].get('percent')?.setValue(33.33);
       component.ingredientsControls[1].get('percent')?.setValue(33.33);
       component.ingredientsControls[2].get('percent')?.setValue(33.34);
-      
+
       component.save();
-      
+
       expect(emitSpy).toHaveBeenCalled();
     });
 
     it('should not emit onSubmit when canSaveOrder is false', () => {
       const emitSpy = vi.spyOn(component.onSubmit, 'emit');
-      
+
       component.save();
-      
+
       expect(emitSpy).not.toHaveBeenCalled();
     });
 
     it('should emit correct ingredient data', () => {
       const emitSpy = vi.spyOn(component.onSubmit, 'emit');
-      
+
       for (let i = 0; i < 3; i++) {
         component.ingredientsControls[i].get('selected')?.setValue(true);
         component.onSelectionChange(i);
@@ -215,12 +217,14 @@ describe('IngredientsTable', () => {
       component.ingredientsControls[0].get('percent')?.setValue(33.33);
       component.ingredientsControls[1].get('percent')?.setValue(33.33);
       component.ingredientsControls[2].get('percent')?.setValue(33.34);
-      
+
       component.save();
-      
+
       const emittedData = emitSpy.mock.calls[0][0];
-      expect(emittedData).toHaveLength(3);
-      emittedData?.forEach(item => {
+      expect(emittedData).toHaveProperty('ingredients');
+      expect(emittedData).toHaveProperty('totalPrice');
+      expect(emittedData?.ingredients).toHaveLength(3);
+      emittedData?.ingredients?.forEach((item: IngredientInterface) => {
         expect(item).toHaveProperty('id');
         expect(item).toHaveProperty('name');
         expect(item).toHaveProperty('price');
@@ -232,9 +236,9 @@ describe('IngredientsTable', () => {
   describe('goBack', () => {
     it('should emit onBack event', () => {
       const emitSpy = vi.spyOn(component.onBack, 'emit');
-      
+
       component.goBack();
-      
+
       expect(emitSpy).toHaveBeenCalled();
     });
   });
@@ -247,7 +251,7 @@ describe('IngredientsTable', () => {
     it('should return true when selected ingredient has empty percent', () => {
       component.ingredientsControls[0].get('selected')?.setValue(true);
       component.onSelectionChange(0);
-      
+
       expect(component.hasInvalidPercentages).toBe(true);
     });
 
@@ -255,7 +259,7 @@ describe('IngredientsTable', () => {
       component.ingredientsControls[0].get('selected')?.setValue(true);
       component.onSelectionChange(0);
       component.ingredientsControls[0].get('percent')?.setValue(50);
-      
+
       expect(component.hasInvalidPercentages).toBe(false);
     });
   });
