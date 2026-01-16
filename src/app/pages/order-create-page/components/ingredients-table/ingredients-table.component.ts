@@ -19,14 +19,6 @@ import { IngredientInterface } from '../../../../core/interfaces/ingredient.inte
 import { minIngredientsValidator } from '../../../../core/validators/min-ingredients/min-ingredients.validator';
 import { totalPercentValidator } from '../../../../core/validators/total-percent/total-percent.validator';
 
-interface MagicalIngredient {
-  id: number;
-  name: string;
-  rarity: string;
-  effect: string;
-  price: number;
-}
-
 @Component({
   selector: 'app-ingredients-table',
   imports: [CardModule, TableModule, InputTextModule, CommonModule, FormsModule,
@@ -35,7 +27,8 @@ interface MagicalIngredient {
   styleUrl: './ingredients-table.component.css',
 })
 export class IngredientsTable implements OnInit {
-  @Output() public onSubmit: EventEmitter<{ ingredients: IngredientInterface[], totalPrice: number }> = new EventEmitter<{ ingredients: IngredientInterface[], totalPrice: number }>();
+  @Output() public onSubmit: EventEmitter<{ ingredients: IngredientInterface[], totalPrice: number }> =
+    new EventEmitter<{ ingredients: IngredientInterface[], totalPrice: number }>();
 
   @Output() public onBack: EventEmitter<void> = new EventEmitter<void>();
 
@@ -43,7 +36,7 @@ export class IngredientsTable implements OnInit {
 
   private fb: FormBuilder = inject(FormBuilder);
 
-  public magicalIngredients: MagicalIngredient[] = magicalIngredients;
+  public magicalIngredients: IngredientInterface[] = magicalIngredients;
 
   public form: FormGroup = this.fb.group({
     ingredients: this.fb.array([], [minIngredientsValidator(3), totalPercentValidator()])
@@ -144,8 +137,8 @@ export class IngredientsTable implements OnInit {
   }
 
   public get canSaveOrder(): boolean {
-    return this.tableErrors.length === 0 && 
-           this.selectedIngredients.length >= 3 && 
+    return this.tableErrors.length === 0 &&
+           this.selectedIngredients.length >= 3 &&
            !this.hasInvalidPercentages;
   }
 
@@ -160,6 +153,8 @@ export class IngredientsTable implements OnInit {
           name: value.name,
           price: Number(value.price),
           percent: Number(value.percent),
+          rarity: value.rarity,
+          effect: value.effect,
         };
       });
 

@@ -172,8 +172,8 @@ describe('OrderCreatePage', () => {
       });
       
       const mockIngredients = [
-        { id: '1', name: 'Ingredient 1', price: 10, percent: 50 },
-        { id: '2', name: 'Ingredient 2', price: 20, percent: 50 },
+        { id: '1', name: 'Ingredient 1', price: 10, percent: 50, rarity: 'common', effect: 'none' },
+        { id: '2', name: 'Ingredient 2', price: 20, percent: 50, rarity: 'rare', effect: 'healing' },
       ];
       
       component.onSubmitIngredients({ ingredients: mockIngredients, totalPrice: 15 });
