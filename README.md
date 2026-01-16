@@ -12,7 +12,7 @@ Wizard Shop is an Angular-based web application that simulates a magical potion 
 
 - **Create Custom Potion Orders** — Build unique potions by adding and configuring ingredients
 - **Manage Ingredients** — Add, edit, and remove ingredients with properties like name, price, and percentage
-- **Track Orders** — View and manage previously created orders
+- **Track Orders** — View previously created orders
 - **Enjoy a Magical Experience** — Beautiful UI with enchanting design elements
 
 ## 🛠️ Tech Stack
