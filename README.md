@@ -1,4 +1,29 @@
-# WizardShop
+# WizardShop 🧙‍♂️✨
+
+A magical potion ordering application where users can create custom potion orders by selecting and configuring ingredients with specific properties.
+
+## 🌐 Live Demo
+
+**[View Live Application](https://yagorka1.github.io/wizard-shop/)**
+
+## 📖 Description
+
+Wizard Shop is an Angular-based web application that simulates a magical potion shop. Users can:
+
+- **Create Custom Potion Orders** — Build unique potions by adding and configuring ingredients
+- **Manage Ingredients** — Add, edit, and remove ingredients with properties like name, price, and percentage
+- **Track Orders** — View and manage previously created orders
+- **Enjoy a Magical Experience** — Beautiful UI with enchanting design elements
+
+## 🛠️ Tech Stack
+
+- **Framework:** Angular 21
+- **UI Components:** PrimeNG
+- **Styling:** Tailwind CSS
+- **Testing:** Vitest
+- **Package Manager:** npm
+
+## 🚀 Getting Started
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.5.
 
