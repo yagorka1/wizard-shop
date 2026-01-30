@@ -1,5 +1,6 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 import { OrderInterface } from '../core/interfaces/order.interface';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -7,19 +8,28 @@ import { OrderInterface } from '../core/interfaces/order.interface';
 export class OrderService {
   private localStorageKey = 'orders';
 
-  private orders:  OrderInterface[] = [];
+  private orders: OrderInterface[] = [];
+
+  private platformId = inject(PLATFORM_ID);
 
   constructor() {
     this.loadFromStorage();
   }
 
   private loadFromStorage(): void {
-    const ordersJson = localStorage.getItem(this.localStorageKey);
+    let ordersJson = null;
+
+    if (isPlatformBrowser(this.platformId)) {
+      ordersJson = localStorage.getItem(this.localStorageKey);
+    }
+
     this.orders = ordersJson ? JSON.parse(ordersJson) : [];
   }
 
   private saveToStorage(): void {
-    localStorage.setItem(this.localStorageKey, JSON.stringify(this.orders));
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem(this.localStorageKey, JSON.stringify(this.orders));
+    }
   }
 
   public addOrder(order: OrderInterface): void {
