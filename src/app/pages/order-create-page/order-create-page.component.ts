@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputDateComponent } from '../../components/input-date/input-date.component';
@@ -18,7 +19,7 @@ enum Steps {
 
 @Component({
   imports: [CardModule, InputComponent, InputDateComponent, InputSelectComponent,
-    ReactiveFormsModule, ButtonModule, IngredientsTable, RouterLink],
+    ReactiveFormsModule, ButtonModule, IngredientsTable, RouterLink, TranslatePipe],
   templateUrl: './order-create-page.component.html',
   styleUrl: './order-create-page.component.css',
 })
@@ -37,16 +38,16 @@ export class OrderCreatePage implements OnInit {
   private orderService: OrderService = inject(OrderService);
 
   public deliveryOptions: SelectOption[] = [
-    { label: 'Курьером', value: 'courier' },
-    { label: 'Самовывоз', value: 'pickup' },
-    { label: 'Почта', value: 'post' },
+    { label: 'delivery.courier', value: 'courier' },
+    { label: 'delivery.pickup', value: 'pickup' },
+    { label: 'delivery.post', value: 'post' },
   ];
 
   public paymentOptions: SelectOption[] = [
-    { label: 'Наличными', value: 'cash' },
-    { label: 'Картой', value: 'card' },
-    { label: 'Онлайн', value: 'online' },
-    { label: 'Криптовалютой', value: 'crypto' },
+    { label: 'payment.cash', value: 'cash' },
+    { label: 'payment.card', value: 'card' },
+    { label: 'payment.online', value: 'online' },
+    { label: 'payment.crypto', value: 'crypto' },
   ];
 
   public ngOnInit(): void {

@@ -8,6 +8,7 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -22,7 +23,7 @@ import { totalPercentValidator } from '../../../../core/validators/total-percent
 @Component({
   selector: 'app-ingredients-table',
   imports: [CardModule, TableModule, InputTextModule, CommonModule, FormsModule,
-     ReactiveFormsModule, ButtonModule, InputComponent, CheckboxModule],
+     ReactiveFormsModule, ButtonModule, InputComponent, CheckboxModule, TranslatePipe],
   templateUrl: './ingredients-table.component.html',
   styleUrl: './ingredients-table.component.css',
 })
@@ -35,6 +36,7 @@ export class IngredientsTable implements OnInit {
   @Input() public isDisableButton: boolean = false;
 
   private fb: FormBuilder = inject(FormBuilder);
+  private translateService = inject(TranslateService);
 
   public magicalIngredients: IngredientInterface[] = magicalIngredients;
 
@@ -67,6 +69,17 @@ export class IngredientsTable implements OnInit {
 
       this.ingredientsArray.push(ingredientGroup);
     });
+  }
+
+  public getRarityClass(rarity: string): Record<string, boolean> {
+    const key = rarity || 'common';
+    return {
+      'bg-gray-200 text-gray-700': key === 'common',
+      'bg-green-200 text-green-700': key === 'uncommon',
+      'bg-blue-200 text-blue-700': key === 'rare',
+      'bg-purple-200 text-purple-700': key === 'veryRare',
+      'bg-orange-200 text-orange-700': key === 'legendary'
+    };
   }
 
   public get ingredientsArray(): FormArray {
@@ -119,11 +132,11 @@ export class IngredientsTable implements OnInit {
     const selectedCount = this.selectedIngredients.length;
 
     if (selectedCount < 3) {
-      errors.push(`Должно быть минимум 3 ингредиента (выбрано ${selectedCount})`);
+      errors.push(this.translateService.instant('ingredientsTable.errors.minIngredients', { count: selectedCount }));
     }
 
     if (selectedCount > 0 && this.totalPercent !== 100) {
-      errors.push(`Общий процент должен быть 100% (сейчас ${this.totalPercent}%)`);
+      errors.push(this.translateService.instant('ingredientsTable.errors.totalPercent', { percent: this.totalPercent }));
     }
 
     return errors;
@@ -150,11 +163,11 @@ export class IngredientsTable implements OnInit {
         const value = group.getRawValue();
         return {
           id: value.id,
-          name: value.name,
+          name: this.translateService.instant('ingredients.' + value.id + '.name'),
           price: Number(value.price),
           percent: Number(value.percent),
-          rarity: value.rarity,
-          effect: value.effect,
+          rarity: this.translateService.instant('rarity.' + value.rarity),
+          effect: this.translateService.instant('ingredients.' + value.id + '.effect'),
         };
       });
 
