@@ -1,23 +1,23 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, forwardRef, inject } from '@angular/core';
 import {
-  ControlContainer,
-  ControlValueAccessor,
-  FormControl,
-  FormGroup,
-  FormGroupDirective,
-  FormsModule,
-  NG_VALUE_ACCESSOR,
-  UntypedFormGroup
+    ControlContainer,
+    ControlValueAccessor,
+    FormControl,
+    FormGroup,
+    FormGroupDirective,
+    FormsModule,
+    NG_VALUE_ACCESSOR
 } from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
+import { TranslatePipe } from '@ngx-translate/core';
 import { FloatLabel } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { ERROR_MESSAGES } from '../../core/constants/error-messages.constants';
-import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-input',
-  imports: [FormsModule, InputTextModule, FloatLabel, MessageModule, NgClass],
+  imports: [FormsModule, InputTextModule, FloatLabel, MessageModule, CommonModule, TranslatePipe],
   templateUrl: './input.component.html',
   styleUrl: './input.component.css',
   providers: [
@@ -88,19 +88,22 @@ export class InputComponent implements ControlValueAccessor {
     return this.isFormControlError && !!this.formControl?.touched && this.formControl?.invalid;
   }
 
-  public get errorMessage(): string {
+  public get errorMessages(): { key: string, params?: any }[] {
     if (this.isFormControlError && this.formControl?.touched && this.formControl?.invalid) {
-      let errors = '';
+      const errors: { key: string, params?: any }[] = [];
 
       const controlErrors = this.formControl.errors || {};
 
       for (const errorKey of Object.keys(controlErrors)) {
-        errors += ERROR_MESSAGES[errorKey]?.(controlErrors[errorKey]) + '\n';
+        const errorFunc = ERROR_MESSAGES[errorKey];
+        if (errorFunc) {
+          errors.push(errorFunc(controlErrors[errorKey]));
+        }
       }
 
       return errors;
     }
 
-    return '';
+    return [];
   }
 }

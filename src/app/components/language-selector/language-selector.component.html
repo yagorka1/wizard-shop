@@ -1,0 +1,9 @@
+<p-select
+  [options]="languages"
+  [(ngModel)]="selectedLanguage"
+  optionLabel="name"
+  optionValue="code"
+  (onChange)="onLanguageChange($event.value)"
+  [style]="{ minWidth: '120px' }"
+  styleClass="language-selector"
+/>

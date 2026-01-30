@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, forwardRef, inject } from '@angular/core';
 import {
   ControlContainer,
@@ -8,11 +9,11 @@ import {
   FormsModule,
   NG_VALUE_ACCESSOR
 } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 import { FloatLabel } from 'primeng/floatlabel';
-import { SelectModule } from 'primeng/select';
 import { MessageModule } from 'primeng/message';
+import { SelectModule } from 'primeng/select';
 import { ERROR_MESSAGES } from '../../core/constants/error-messages.constants';
-import { CommonModule } from '@angular/common';
 
 export interface SelectOption {
   label: string;
@@ -21,7 +22,7 @@ export interface SelectOption {
 
 @Component({
   selector: 'app-input-select',
-  imports: [CommonModule, FormsModule, SelectModule, FloatLabel, MessageModule],
+  imports: [CommonModule, FormsModule, SelectModule, FloatLabel, MessageModule, TranslatePipe],
   templateUrl: './input-select.component.html',
   styleUrl: './input-select.component.css',
   providers: [
@@ -92,19 +93,22 @@ export class InputSelectComponent implements ControlValueAccessor {
     return this.isFormControlError && !!this.formControl?.touched && this.formControl?.invalid;
   }
 
-  public get errorMessage(): string {
+  public get errorMessages(): { key: string, params?: any }[] {
     if (this.isFormControlError && this.formControl?.touched && this.formControl?.invalid) {
-      let errors = '';
+      const errors: { key: string, params?: any }[] = [];
 
       const controlErrors = this.formControl.errors || {};
 
       for (const errorKey of Object.keys(controlErrors)) {
-        errors += ERROR_MESSAGES[errorKey]?.(controlErrors[errorKey]) + '\n';
+        const errorFunc = ERROR_MESSAGES[errorKey];
+        if (errorFunc) {
+          errors.push(errorFunc(controlErrors[errorKey]));
+        }
       }
 
       return errors;
     }
 
-    return '';
+    return [];
   }
 }

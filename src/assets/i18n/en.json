@@ -1,0 +1,152 @@
+{
+  "landing": {
+    "title": "Potion Shop",
+    "orderPotion": "Order Potion",
+    "viewOrders": "View Orders",
+    "features": {
+      "delivery": {
+        "title": "Fast Delivery",
+        "description": "Quick and anonymous delivery."
+      },
+      "ingredients": {
+        "title": "Magical Ingredients",
+        "description": "Only rare and magical ingredients."
+      },
+      "payment": {
+        "title": "Secure Payment",
+        "description": "Pay by card, cash, or crypto."
+      }
+    },
+    "footer": "© 2026 Potion Shop. All rights reserved."
+  },
+  "orders": {
+    "title": "Orders",
+    "orderPotion": "Order Potion",
+    "noOrders": "🪄 No orders yet",
+    "ingredientsTitle": "🧪 Ingredients for potion",
+    "table": {
+      "customerName": "Customer Name",
+      "potionNumber": "Potion Number",
+      "orderDate": "Order Date",
+      "readyDate": "Ready Date",
+      "address": "Address",
+      "delivery": "Delivery",
+      "payment": "Payment",
+      "price": "Price",
+      "ingredient": "Ingredient",
+      "pricePer100g": "Price per 100g",
+      "quantity": "Quantity"
+    }
+  },
+  "orderCreate": {
+    "title": "Order your potion!",
+    "back": "Back",
+    "selectIngredients": "Select Ingredients",
+    "labels": {
+      "potionNumber": "Potion Number",
+      "customerName": "Customer Name",
+      "orderDate": "Order Date",
+      "readyDate": "Ready Date",
+      "deliveryAddress": "Delivery Address",
+      "deliveryMethod": "Delivery Method",
+      "paymentMethod": "Payment Method"
+    }
+  },
+  "ingredientsTable": {
+    "title": "Select Ingredients",
+    "back": "Back",
+    "table": {
+      "select": "Select",
+      "name": "Name",
+      "rarity": "Rarity",
+      "effect": "Effect",
+      "pricePer100g": "Price per 100g",
+      "percent": "Percent"
+    },
+    "summary": {
+      "selectedIngredients": "Selected ingredients",
+      "totalPercent": "Total percent",
+      "total": "Total"
+    },
+    "placeOrder": "Place Order",
+    "errors": {
+      "minIngredients": "Minimum 3 ingredients required (selected {{count}})",
+      "totalPercent": "Total percent must be 100% (currently {{percent}}%)"
+    }
+  },
+  "delivery": {
+    "courier": "By Courier",
+    "pickup": "Pickup",
+    "post": "Post"
+  },
+  "payment": {
+    "cash": "Cash",
+    "card": "Card",
+    "online": "Online",
+    "crypto": "Cryptocurrency"
+  },
+  "rarity": {
+    "common": "Common",
+    "uncommon": "Uncommon",
+    "rare": "Rare",
+    "veryRare": "Very Rare",
+    "legendary": "Legendary"
+  },
+  "currency": "RUB",
+  "ingredients": {
+    "1": {
+      "name": "Mandrake Root",
+      "effect": "enhances life energy"
+    },
+    "2": {
+      "name": "Moonflower Pollen",
+      "effect": "calms the mind and improves concentration"
+    },
+    "3": {
+      "name": "Phoenix Tear",
+      "effect": "resurrection and powerful healing"
+    },
+    "4": {
+      "name": "Night Dragon Scale",
+      "effect": "provides protection from fire and darkness"
+    },
+    "5": {
+      "name": "Underdark Spider Silk",
+      "effect": "binds magical components"
+    },
+    "6": {
+      "name": "Swamp Troll Blood",
+      "effect": "increases physical strength"
+    },
+    "7": {
+      "name": "Seer Owl Feather",
+      "effect": "grants brief foresight"
+    },
+    "8": {
+      "name": "Mana Crystal",
+      "effect": "restores magical energy"
+    },
+    "9": {
+      "name": "Mist Essence",
+      "effect": "makes the potion unstable but powerful"
+    },
+    "10": {
+      "name": "Vampire Fang",
+      "effect": "transfers vampiric regeneration properties"
+    }
+  },
+  "languages": {
+    "en": "English",
+    "ru": "Русский"
+  },
+  "errors": {
+    "required": "Field is required",
+    "minlength": "Minimum {{requiredLength}} characters",
+    "maxlength": "Maximum {{requiredLength}} characters",
+    "email": "Invalid email",
+    "pattern": "Invalid format",
+    "min": "Minimum {{min}}",
+    "max": "Maximum {{max}}",
+    "dateRange": "Date cannot be earlier than order date"
+  }
+}

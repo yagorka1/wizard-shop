@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { Card } from 'primeng/card';
@@ -14,7 +15,7 @@ import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-orders-page',
-  imports: [TagModule, TableModule, RatingModule, CommonModule, FormsModule, ButtonModule, ToastModule, Card, RouterLink],
+  imports: [TagModule, TableModule, RatingModule, CommonModule, FormsModule, ButtonModule, ToastModule, Card, RouterLink, TranslatePipe],
   templateUrl: './orders-page.component.html',
   providers: [MessageService],
   styleUrl: './orders-page.component.css',
@@ -23,19 +24,6 @@ export class OrdersPageComponent {
   private orderService = inject(OrderService);
 
   public orders: OrderInterface[] = [];
-
-  public deliveryLabels: Record<string, string> = {
-    courier: 'Курьером',
-    pickup: 'Самовывоз',
-    post: 'Почта',
-  };
-
-  public paymentLabels: Record<string, string> = {
-    cash: 'Наличными',
-    card: 'Картой',
-    online: 'Онлайн',
-    crypto: 'Криптовалютой',
-  };
 
   public ngOnInit(): void {
     this.orders = this.orderService.getOrders();

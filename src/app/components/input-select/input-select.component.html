@@ -11,13 +11,26 @@
       (onBlur)="onTouched()"
       class="w-full h-8"
       fluid
-    />
+    >
+      <ng-template #selectedItem let-selectedOption>
+        <div class="flex items-center gap-2">
+          <div>{{ selectedOption.label | translate }}</div>
+        </div>
+      </ng-template>
+      <ng-template let-option #item>
+        <div class="flex items-center gap-2">
+          <div>{{ option.label | translate }}</div>
+        </div>
+      </ng-template>
+    </p-select>
     <label [for]="id">{{ label }}</label>
   </p-floatlabel>
 
   <small class="text-red-500 block h-4 text-xs leading-4">
     @if (isShowError) {
-      <span>{{ errorMessage }}</span>
+      <div *ngFor="let error of errorMessages">
+        {{ error.key | translate: error.params }}
+      </div>
     }
   </small>
 </div>

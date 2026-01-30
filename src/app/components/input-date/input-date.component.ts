@@ -1,20 +1,23 @@
 import { Component, forwardRef, inject, Input } from '@angular/core';
 import {
-  ControlContainer,
-  FormControl,
-  FormGroup,
-  FormGroupDirective,
-  FormsModule,
-  NG_VALUE_ACCESSOR
+    ControlContainer,
+    FormControl,
+    FormGroup,
+    FormGroupDirective,
+    FormsModule,
+    NG_VALUE_ACCESSOR
 } from '@angular/forms';
-import { FloatLabel } from 'primeng/floatlabel';
 import { DatePickerModule } from 'primeng/datepicker';
+import { FloatLabel } from 'primeng/floatlabel';
 import { MessageModule } from 'primeng/message';
 import { ERROR_MESSAGES } from '../../core/constants/error-messages.constants';
 
+import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-input-date',
-  imports: [FormsModule, DatePickerModule, FloatLabel, MessageModule],
+  imports: [FormsModule, DatePickerModule, FloatLabel, MessageModule, CommonModule, TranslatePipe],
   templateUrl: './input-date.component.html',
   styleUrl: './input-date.component.css',
   providers: [
@@ -83,19 +86,22 @@ export class InputDateComponent {
     return this.isFormControlError && !!this.formControl?.touched && this.formControl?.invalid;
   }
 
-  public get errorMessage(): string {
+  public get errorMessages(): { key: string, params?: any }[] {
     if (this.isFormControlError && this.formControl?.touched && this.formControl?.invalid) {
-      let errors = '';
+      const errors: { key: string, params?: any }[] = [];
 
       const controlErrors = this.formControl.errors || {};
 
       for (const errorKey of Object.keys(controlErrors)) {
-        errors += ERROR_MESSAGES[errorKey]?.(controlErrors[errorKey]) + '\n';
+        const errorFunc = ERROR_MESSAGES[errorKey];
+        if (errorFunc) {
+          errors.push(errorFunc(controlErrors[errorKey]));
+        }
       }
 
       return errors;
     }
 
-    return '';
+    return [];
   }
 }

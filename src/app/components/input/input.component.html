@@ -14,9 +14,11 @@
     <label [for]="id">{{ label }}</label>
   </p-floatlabel>
 
-  <small class="text-red-500 block h-4 text-xs leading-4">
+  <small class="text-red-500 block text-xs leading-4 min-h-4">
     @if (isShowError) {
-      <span>{{ errorMessage }}</span>
+      <div *ngFor="let error of errorMessages">
+        {{ error.key | translate: error.params }}
+      </div>
     }
   </small>
 </div>

@@ -8,12 +8,12 @@
         <ng-template pTemplate="header">
           <div class="flex items-center justify-between w-full p-6">
             <span class="text-xl font-semibold">
-              Закажи свое зелье!
+              {{ 'orderCreate.title' | translate }}
             </span>
 
             <p-button
               severity="secondary"
-              label="Назад"
+              [label]="'orderCreate.back' | translate"
               [routerLink]="'/orders'"
               styleClass="mb-4"
             />
@@ -21,33 +21,33 @@
         </ng-template>
 
         <div class="flex flex-col gap-3">
-          <app-input class="w-full" label="Номер зелья" formControlName="number"></app-input>
+          <app-input class="w-full" [label]="'orderCreate.labels.potionNumber' | translate" formControlName="number"></app-input>
 
-          <app-input class="w-full" label="Имя заказчика" formControlName="name"></app-input>
+          <app-input class="w-full" [label]="'orderCreate.labels.customerName' | translate" formControlName="name"></app-input>
 
-          <app-input-date class="w-full" label="Дата заказа" formControlName="date"></app-input-date>
+          <app-input-date class="w-full" [label]="'orderCreate.labels.orderDate' | translate" formControlName="date"></app-input-date>
 
-          <app-input-date class="w-full" label="Дата готовности" formControlName="readyDate"></app-input-date>
+          <app-input-date class="w-full" [label]="'orderCreate.labels.readyDate' | translate" formControlName="readyDate"></app-input-date>
 
-          <app-input class="w-full" label="Адрес доставки" formControlName="address"></app-input>
+          <app-input class="w-full" [label]="'orderCreate.labels.deliveryAddress' | translate" formControlName="address"></app-input>
 
           <app-input-select
             class="w-full"
-            label="Способ доставки"
+            [label]="'orderCreate.labels.deliveryMethod' | translate"
             formControlName="delivery"
             [options]="deliveryOptions"
           ></app-input-select>
 
           <app-input-select
             class="w-full"
-            label="Способ оплаты"
+            [label]="'orderCreate.labels.paymentMethod' | translate"
             formControlName="payment"
             [options]="paymentOptions"
           ></app-input-select>
         </div>
 
         <p-button type="submit" [disabled]="isShowExplosion" severity="success" class="block mt-6"
-                  label="Выбрать ингредиенты"/>
+                  [label]="'orderCreate.selectIngredients' | translate"/>
       </p-card>
     </div>
   </form>
