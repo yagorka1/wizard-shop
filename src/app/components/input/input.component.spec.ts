@@ -44,7 +44,7 @@ describe('InputComponent', () => {
   it('should update form value when input changes', () => {
     hostComponent.form.get('testField')?.setValue('test value');
     fixture.detectChanges();
-    
+
     expect(hostComponent.form.get('testField')?.value).toBe('test value');
   });
 });

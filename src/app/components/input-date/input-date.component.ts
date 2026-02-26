@@ -1,11 +1,11 @@
 import { Component, forwardRef, inject, Input } from '@angular/core';
 import {
-    ControlContainer,
-    FormControl,
-    FormGroup,
-    FormGroupDirective,
-    FormsModule,
-    NG_VALUE_ACCESSOR
+  ControlContainer,
+  FormControl,
+  FormGroup,
+  FormGroupDirective,
+  FormsModule,
+  NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabel } from 'primeng/floatlabel';
@@ -43,19 +43,19 @@ export class InputDateComponent {
     /* empty */
   };
 
-  public writeValue(value: any): void {
+  public writeValue(value: string): void {
     this.value = value;
   }
 
-  public registerOnChange(fn: any): void {
+  public registerOnChange(fn: (value: string) => void): void {
     this.onChange = fn;
   }
 
-  public onChange = (value: any) => {
+  public onChange: (value: string) => void = () => {
     /* empty */
   };
 
-  public registerOnTouched(fn: any): void {
+  public registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
@@ -69,8 +69,8 @@ export class InputDateComponent {
   public get formControl(): FormControl | null {
     return this.controlContainer.formDirective
       ? (((this.controlContainer.formDirective as FormGroupDirective).form as FormGroup)?.get(
-        this.formControlName,
-      ) as FormControl)
+          this.formControlName,
+        ) as FormControl)
       : null;
   }
 
@@ -86,9 +86,9 @@ export class InputDateComponent {
     return this.isFormControlError && !!this.formControl?.touched && this.formControl?.invalid;
   }
 
-  public get errorMessages(): { key: string, params?: any }[] {
+  public get errorMessages(): { key: string; params?: Record<string, unknown> }[] {
     if (this.isFormControlError && this.formControl?.touched && this.formControl?.invalid) {
-      const errors: { key: string, params?: any }[] = [];
+      const errors: { key: string; params?: Record<string, unknown> }[] = [];
 
       const controlErrors = this.formControl.errors || {};
 

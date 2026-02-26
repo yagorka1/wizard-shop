@@ -15,5 +15,5 @@ export const routes: Routes = [
   {
     path: 'order-create',
     component: OrderCreatePage,
-  }
+  },
 ];

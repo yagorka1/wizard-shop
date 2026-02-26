@@ -44,7 +44,7 @@ describe('InputDateComponent', () => {
   it('should update form value when date changes', () => {
     hostComponent.form.get('testDate')?.setValue('2025-01-15');
     fixture.detectChanges();
-    
+
     expect(hostComponent.form.get('testDate')?.value).toBe('2025-01-15');
   });
 });

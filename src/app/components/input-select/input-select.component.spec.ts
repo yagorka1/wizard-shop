@@ -1,15 +1,13 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { InputSelectComponent } from './input-select.component';
 
 @Component({
   template: `
     <form [formGroup]="form">
-      <app-input-select 
-        formControlName="testSelect" 
-        label="Test Select"
-        [options]="options">
+      <app-input-select formControlName="testSelect" label="Test Select" [options]="options">
       </app-input-select>
     </form>
   `,
@@ -31,7 +29,7 @@ describe('InputSelectComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TestHostComponent],
+      imports: [TestHostComponent, TranslateModule.forRoot()],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
@@ -52,7 +50,7 @@ describe('InputSelectComponent', () => {
   it('should update form value when selection changes', () => {
     hostComponent.form.get('testSelect')?.setValue('option2');
     fixture.detectChanges();
-    
+
     expect(hostComponent.form.get('testSelect')?.value).toBe('option2');
   });
 });

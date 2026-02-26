@@ -1,9 +1,10 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { IngredientsTable } from './ingredients-table.component';
 import { IngredientInterface } from '../../../../core/interfaces/ingredient.interface';
+import { IngredientsTable } from './ingredients-table.component';
 
 describe('IngredientsTable', () => {
   let component: IngredientsTable;
@@ -11,7 +12,7 @@ describe('IngredientsTable', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [IngredientsTable],
+      imports: [IngredientsTable, TranslateModule.forRoot()],
       providers: [provideRouter([])],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
@@ -36,13 +37,13 @@ describe('IngredientsTable', () => {
     });
 
     it('should have all ingredients unselected initially', () => {
-      component.ingredientsControls.forEach(group => {
+      component.ingredientsControls.forEach((group) => {
         expect(group.get('selected')?.value).toBe(false);
       });
     });
 
     it('should have percent as null initially', () => {
-      component.ingredientsControls.forEach(group => {
+      component.ingredientsControls.forEach((group) => {
         expect(group.get('percent')?.value).toBeNull();
       });
     });
@@ -120,7 +121,7 @@ describe('IngredientsTable', () => {
       group.get('selected')?.setValue(true);
       group.get('percent')?.setValue(50);
 
-      expect(component.totalPrice).toBe(price * 50 / 100);
+      expect(component.totalPrice).toBe((price * 50) / 100);
     });
   });
 
@@ -129,7 +130,9 @@ describe('IngredientsTable', () => {
       component.ingredientsControls[0].get('selected')?.setValue(true);
       component.ingredientsControls[0].get('percent')?.setValue(100);
 
-      expect(component.tableErrors.some(e => e.includes('минимум 3'))).toBe(true);
+      expect(
+        component.tableErrors.some((e) => e.includes('ingredientsTable.errors.minIngredients')),
+      ).toBe(true);
     });
 
     it('should show error when total percent is not 100', () => {
@@ -138,7 +141,9 @@ describe('IngredientsTable', () => {
         component.ingredientsControls[i].get('percent')?.setValue(20);
       }
 
-      expect(component.tableErrors.some(e => e.includes('100%'))).toBe(true);
+      expect(
+        component.tableErrors.some((e) => e.includes('ingredientsTable.errors.totalPercent')),
+      ).toBe(true);
     });
 
     it('should be empty when valid', () => {

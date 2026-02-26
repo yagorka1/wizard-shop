@@ -1,20 +1,25 @@
 <div class="flex flex-col h-screen font-sans text-white overflow-hidden">
-
   <div class="absolute top-4 right-4 z-10">
     <app-language-selector />
   </div>
 
   <section class="flex-1 flex flex-col justify-center items-center text-center px-4">
-    <h1 class="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg text-fuchsia-600">{{ 'landing.title' | translate }}</h1>
+    <h1 class="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg text-fuchsia-600">
+      {{ 'landing.title' | translate }}
+    </h1>
 
     <div class="flex flex-col md:flex-row gap-2">
-      <a routerLink="/order-create"
-         class="bg-yellow-400 hover:bg-yellow-500 text-purple-900 font-bold py-2 px-6 rounded-xl shadow-lg transition cursor-pointer">
+      <a
+        routerLink="/order-create"
+        class="bg-yellow-400 hover:bg-yellow-500 text-purple-900 font-bold py-2 px-6 rounded-xl shadow-lg transition cursor-pointer"
+      >
         {{ 'landing.orderPotion' | translate }}
       </a>
 
-      <a routerLink="/orders"
-         class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-xl shadow-lg transition cursor-pointer">
+      <a
+        routerLink="/orders"
+        class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded-xl shadow-lg transition cursor-pointer"
+      >
         {{ 'landing.viewOrders' | translate }}
       </a>
     </div>
@@ -24,19 +29,29 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center w-full max-w-6xl">
       <div class="p-3 md:p-4 bg-purple-700 rounded-xl shadow-lg hover:scale-105 transition">
         <i class="pi pi-truck text-3xl mb-1"></i>
-        <h3 class="text-lg md:text-xl font-bold mb-1">{{ 'landing.features.delivery.title' | translate }}</h3>
-        <p class="text-sm md:text-base">{{ 'landing.features.delivery.description' | translate }}</p>
+        <h3 class="text-lg md:text-xl font-bold mb-1">
+          {{ 'landing.features.delivery.title' | translate }}
+        </h3>
+        <p class="text-sm md:text-base">
+          {{ 'landing.features.delivery.description' | translate }}
+        </p>
       </div>
 
       <div class="p-3 md:p-4 bg-purple-700 rounded-xl shadow-lg hover:scale-105 transition">
         <i class="pi pi-star-fill text-3xl mb-1"></i>
-        <h3 class="text-lg md:text-xl font-bold mb-1">{{ 'landing.features.ingredients.title' | translate }}</h3>
-        <p class="text-sm md:text-base">{{ 'landing.features.ingredients.description' | translate }}</p>
+        <h3 class="text-lg md:text-xl font-bold mb-1">
+          {{ 'landing.features.ingredients.title' | translate }}
+        </h3>
+        <p class="text-sm md:text-base">
+          {{ 'landing.features.ingredients.description' | translate }}
+        </p>
       </div>
 
       <div class="p-3 md:p-4 bg-purple-700 rounded-xl shadow-lg hover:scale-105 transition">
         <i class="pi pi-credit-card text-3xl mb-1"></i>
-        <h3 class="text-lg md:text-xl font-bold mb-1">{{ 'landing.features.payment.title' | translate }}</h3>
+        <h3 class="text-lg md:text-xl font-bold mb-1">
+          {{ 'landing.features.payment.title' | translate }}
+        </h3>
         <p class="text-sm md:text-base">{{ 'landing.features.payment.description' | translate }}</p>
       </div>
     </div>

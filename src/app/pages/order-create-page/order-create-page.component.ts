@@ -5,7 +5,10 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { InputDateComponent } from '../../components/input-date/input-date.component';
-import { InputSelectComponent, SelectOption } from '../../components/input-select/input-select.component';
+import {
+  InputSelectComponent,
+  SelectOption,
+} from '../../components/input-select/input-select.component';
 import { InputComponent } from '../../components/input/input.component';
 import { IngredientInterface } from '../../core/interfaces/ingredient.interface';
 import { dateRangeValidator } from '../../core/validators/date-range/date-range.validator';
@@ -18,8 +21,17 @@ enum Steps {
 }
 
 @Component({
-  imports: [CardModule, InputComponent, InputDateComponent, InputSelectComponent,
-    ReactiveFormsModule, ButtonModule, IngredientsTable, RouterLink, TranslatePipe],
+  imports: [
+    CardModule,
+    InputComponent,
+    InputDateComponent,
+    InputSelectComponent,
+    ReactiveFormsModule,
+    ButtonModule,
+    IngredientsTable,
+    RouterLink,
+    TranslatePipe,
+  ],
   templateUrl: './order-create-page.component.html',
   styleUrl: './order-create-page.component.css',
 })
@@ -55,17 +67,20 @@ export class OrderCreatePage implements OnInit {
   }
 
   public initForm(): void {
-    this.form = this.fb.nonNullable.group({
-      name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      number: ['', [Validators.required]],
-      date: ['', [Validators.required]],
-      readyDate: ['', [Validators.required]],
-      address: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-      delivery: ['courier', [Validators.required]],
-      payment: ['card', [Validators.required]],
-    }, {
-      validators: [dateRangeValidator('date', 'readyDate')]
-    });
+    this.form = this.fb.nonNullable.group(
+      {
+        name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+        number: ['', [Validators.required]],
+        date: ['', [Validators.required]],
+        readyDate: ['', [Validators.required]],
+        address: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+        delivery: ['courier', [Validators.required]],
+        payment: ['card', [Validators.required]],
+      },
+      {
+        validators: [dateRangeValidator('date', 'readyDate')],
+      },
+    );
   }
 
   public onSubmit() {
@@ -76,7 +91,10 @@ export class OrderCreatePage implements OnInit {
     }
   }
 
-  public onSubmitIngredients(data: { ingredients: IngredientInterface[], totalPrice: number }): void {
+  public onSubmitIngredients(data: {
+    ingredients: IngredientInterface[];
+    totalPrice: number;
+  }): void {
     this.isShowExplosion = true;
 
     setTimeout(() => {
@@ -91,7 +109,6 @@ export class OrderCreatePage implements OnInit {
 
       this.router.navigate(['/orders']);
     }, 1000);
-
   }
 
   public onBackFromIngredients(): void {

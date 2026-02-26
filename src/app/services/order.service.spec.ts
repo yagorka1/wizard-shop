@@ -8,15 +8,15 @@ describe('OrderService', () => {
 
   beforeEach(() => {
     localStorageMock = {};
-    
+
     vi.spyOn(Storage.prototype, 'getItem').mockImplementation((key: string) => {
       return localStorageMock[key] || null;
     });
-    
+
     vi.spyOn(Storage.prototype, 'setItem').mockImplementation((key: string, value: string) => {
       localStorageMock[key] = value;
     });
-    
+
     vi.spyOn(Storage.prototype, 'removeItem').mockImplementation((key: string) => {
       delete localStorageMock[key];
     });
@@ -58,9 +58,9 @@ describe('OrderService', () => {
   describe('addOrder', () => {
     it('should add an order and save to localStorage', () => {
       const order = createMockOrder();
-      
+
       service.addOrder(order);
-      
+
       expect(service.getOrders()).toContainEqual(order);
       expect(localStorage.setItem).toHaveBeenCalled();
     });
@@ -68,10 +68,10 @@ describe('OrderService', () => {
     it('should add multiple orders', () => {
       const order1 = createMockOrder('1');
       const order2 = createMockOrder('2');
-      
+
       service.addOrder(order1);
       service.addOrder(order2);
-      
+
       expect(service.getOrders()).toHaveLength(2);
     });
   });
@@ -80,12 +80,12 @@ describe('OrderService', () => {
     it('should return all orders', () => {
       const order1 = createMockOrder('1');
       const order2 = createMockOrder('2');
-      
+
       service.addOrder(order1);
       service.addOrder(order2);
-      
+
       const orders = service.getOrders();
-      
+
       expect(orders).toHaveLength(2);
       expect(orders).toContainEqual(order1);
       expect(orders).toContainEqual(order2);
@@ -96,14 +96,14 @@ describe('OrderService', () => {
     it('should update an existing order', () => {
       const order = createMockOrder('1');
       service.addOrder(order);
-      
+
       const updatedOrder: OrderInterface = {
         ...order,
         name: 'Updated Order Name',
       };
-      
+
       service.updateOrder(updatedOrder);
-      
+
       const orders = service.getOrders();
       expect(orders).toHaveLength(1);
       expect(orders[0].name).toBe('Updated Order Name');
@@ -112,11 +112,11 @@ describe('OrderService', () => {
     it('should save to localStorage after update', () => {
       const order = createMockOrder('1');
       service.addOrder(order);
-      
+
       vi.mocked(localStorage.setItem).mockClear();
-      
+
       service.updateOrder({ ...order, name: 'New Name' });
-      
+
       expect(localStorage.setItem).toHaveBeenCalled();
     });
 
@@ -125,11 +125,11 @@ describe('OrderService', () => {
       const order2 = createMockOrder('2');
       service.addOrder(order1);
       service.addOrder(order2);
-      
+
       service.updateOrder({ ...order1, name: 'Updated' });
-      
+
       const orders = service.getOrders();
-      expect(orders.find(o => o.id === '2')?.name).toBe('Test Order');
+      expect(orders.find((o) => o.id === '2')?.name).toBe('Test Order');
     });
   });
 
@@ -137,20 +137,20 @@ describe('OrderService', () => {
     it('should delete an existing order', () => {
       const order = createMockOrder('1');
       service.addOrder(order);
-      
+
       service.deleteOrder('1');
-      
+
       expect(service.getOrders()).toHaveLength(0);
     });
 
     it('should save to localStorage after deletion', () => {
       const order = createMockOrder('1');
       service.addOrder(order);
-      
+
       vi.mocked(localStorage.setItem).mockClear();
-      
+
       service.deleteOrder('1');
-      
+
       expect(localStorage.setItem).toHaveBeenCalled();
     });
 
@@ -159,9 +159,9 @@ describe('OrderService', () => {
       const order2 = createMockOrder('2');
       service.addOrder(order1);
       service.addOrder(order2);
-      
+
       service.deleteOrder('1');
-      
+
       const orders = service.getOrders();
       expect(orders).toHaveLength(1);
       expect(orders[0].id).toBe('2');
@@ -170,9 +170,9 @@ describe('OrderService', () => {
     it('should do nothing if order id does not exist', () => {
       const order = createMockOrder('1');
       service.addOrder(order);
-      
+
       service.deleteOrder('non-existent');
-      
+
       expect(service.getOrders()).toHaveLength(1);
     });
   });

@@ -1,6 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { OrderInterface } from '../../core/interfaces/order.interface';
 import { OrderService } from '../../services/order.service';
 import { OrdersPageComponent } from './orders-page.component';
@@ -49,7 +50,7 @@ describe('OrdersPageComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [OrdersPageComponent],
+      imports: [OrdersPageComponent, TranslateModule.forRoot()],
       providers: [provideRouter([]), { provide: OrderService, useValue: orderServiceSpy }],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();

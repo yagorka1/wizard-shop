@@ -7,7 +7,9 @@ export function totalPercentValidator() {
         const val = group.get('percent')?.value;
         return sum + (Number(val) || 0);
       }, 0);
-      return Math.abs(total - 100) < 0.01 ? null : { totalPercent: { required: 100, actual: total } };
+      return Math.abs(total - 100) < 0.01
+        ? null
+        : { totalPercent: { required: 100, actual: total } };
     }
     return null;
   };

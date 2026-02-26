@@ -38,10 +38,7 @@ describe('totalPercentValidator', () => {
   });
 
   it('should return error if total percent is less than 100', () => {
-    const formArray = fb.array([
-      fb.group({ percent: 30 }),
-      fb.group({ percent: 30 }),
-    ]);
+    const formArray = fb.array([fb.group({ percent: 30 }), fb.group({ percent: 30 })]);
     const validator = totalPercentValidator();
 
     expect(validator(formArray)).toEqual({
@@ -50,10 +47,7 @@ describe('totalPercentValidator', () => {
   });
 
   it('should return error if total percent is more than 100', () => {
-    const formArray = fb.array([
-      fb.group({ percent: 50 }),
-      fb.group({ percent: 60 }),
-    ]);
+    const formArray = fb.array([fb.group({ percent: 50 }), fb.group({ percent: 60 })]);
     const validator = totalPercentValidator();
 
     expect(validator(formArray)).toEqual({
@@ -62,10 +56,7 @@ describe('totalPercentValidator', () => {
   });
 
   it('should handle null percent values as 0', () => {
-    const formArray = fb.array([
-      fb.group({ percent: null }),
-      fb.group({ percent: 100 }),
-    ]);
+    const formArray = fb.array([fb.group({ percent: null }), fb.group({ percent: 100 })]);
     const validator = totalPercentValidator();
 
     expect(validator(formArray)).toBeNull();
@@ -91,10 +82,7 @@ describe('totalPercentValidator', () => {
   });
 
   it('should handle string percent values', () => {
-    const formArray = fb.array([
-      fb.group({ percent: '50' }),
-      fb.group({ percent: '50' }),
-    ]);
+    const formArray = fb.array([fb.group({ percent: '50' }), fb.group({ percent: '50' })]);
     const validator = totalPercentValidator();
 
     expect(validator(formArray)).toBeNull();

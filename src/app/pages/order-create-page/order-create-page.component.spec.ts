@@ -1,13 +1,14 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { OrderService } from '../../services/order.service';
 import { OrderCreatePage } from './order-create-page.component';
 
 describe('OrderCreatePage', () => {
   let component: OrderCreatePage;
   let fixture: ComponentFixture<OrderCreatePage>;
-  let orderServiceSpy: any;
+  let orderServiceSpy: Partial<OrderService>;
 
   beforeEach(async () => {
     orderServiceSpy = {
@@ -18,11 +19,8 @@ describe('OrderCreatePage', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [OrderCreatePage],
-      providers: [
-        provideRouter([]),
-        { provide: OrderService, useValue: orderServiceSpy },
-      ],
+      imports: [OrderCreatePage, TranslateModule.forRoot()],
+      providers: [provideRouter([]), { provide: OrderService, useValue: orderServiceSpy }],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
@@ -102,7 +100,7 @@ describe('OrderCreatePage', () => {
         readyDate: '2025-01-15',
       });
       component.form.updateValueAndValidity();
-      
+
       expect(component.form.hasError('dateRange')).toBe(true);
     });
 
@@ -124,7 +122,7 @@ describe('OrderCreatePage', () => {
   describe('onSubmit', () => {
     it('should mark all controls as touched', () => {
       component.onSubmit();
-      
+
       expect(component.form.get('name')?.touched).toBe(true);
       expect(component.form.get('number')?.touched).toBe(true);
     });
@@ -132,7 +130,7 @@ describe('OrderCreatePage', () => {
     it('should not change step if form is invalid', () => {
       component.form.patchValue({ name: '' });
       component.onSubmit();
-      
+
       expect(component.step).toBe(component.steps.ORDER);
     });
 
@@ -144,9 +142,9 @@ describe('OrderCreatePage', () => {
         readyDate: '2025-01-20',
         address: 'Valid Address',
       });
-      
+
       component.onSubmit();
-      
+
       expect(component.step).toBe(component.steps.INGREDIENTS);
     });
   });
@@ -154,9 +152,9 @@ describe('OrderCreatePage', () => {
   describe('onBackFromIngredients', () => {
     it('should change step back to ORDER', () => {
       component.step = component.steps.INGREDIENTS;
-      
+
       component.onBackFromIngredients();
-      
+
       expect(component.step).toBe(component.steps.ORDER);
     });
   });
@@ -170,14 +168,21 @@ describe('OrderCreatePage', () => {
         readyDate: '2025-01-20',
         address: 'Valid Address',
       });
-      
+
       const mockIngredients = [
         { id: '1', name: 'Ingredient 1', price: 10, percent: 50, rarity: 'common', effect: 'none' },
-        { id: '2', name: 'Ingredient 2', price: 20, percent: 50, rarity: 'rare', effect: 'healing' },
+        {
+          id: '2',
+          name: 'Ingredient 2',
+          price: 20,
+          percent: 50,
+          rarity: 'rare',
+          effect: 'healing',
+        },
       ];
-      
+
       component.onSubmitIngredients({ ingredients: mockIngredients, totalPrice: 15 });
-      
+
       expect(component.isShowExplosion).toBe(true);
     });
   });
