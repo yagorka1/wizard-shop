@@ -6,7 +6,7 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  Validators
+  Validators,
 } from '@angular/forms';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
@@ -22,14 +22,26 @@ import { totalPercentValidator } from '../../../../core/validators/total-percent
 
 @Component({
   selector: 'app-ingredients-table',
-  imports: [CardModule, TableModule, InputTextModule, CommonModule, FormsModule,
-     ReactiveFormsModule, ButtonModule, InputComponent, CheckboxModule, TranslatePipe],
+  imports: [
+    CardModule,
+    TableModule,
+    InputTextModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ButtonModule,
+    InputComponent,
+    CheckboxModule,
+    TranslatePipe,
+  ],
   templateUrl: './ingredients-table.component.html',
   styleUrl: './ingredients-table.component.css',
 })
 export class IngredientsTable implements OnInit {
-  @Output() public onSubmit: EventEmitter<{ ingredients: IngredientInterface[], totalPrice: number }> =
-    new EventEmitter<{ ingredients: IngredientInterface[], totalPrice: number }>();
+  @Output() public onSubmit: EventEmitter<{
+    ingredients: IngredientInterface[];
+    totalPrice: number;
+  }> = new EventEmitter<{ ingredients: IngredientInterface[]; totalPrice: number }>();
 
   @Output() public onBack: EventEmitter<void> = new EventEmitter<void>();
 
@@ -41,7 +53,7 @@ export class IngredientsTable implements OnInit {
   public magicalIngredients: IngredientInterface[] = magicalIngredients;
 
   public form: FormGroup = this.fb.group({
-    ingredients: this.fb.array([], [minIngredientsValidator(3), totalPercentValidator()])
+    ingredients: this.fb.array([], [minIngredientsValidator(3), totalPercentValidator()]),
   });
 
   public ngOnInit(): void {
@@ -49,7 +61,7 @@ export class IngredientsTable implements OnInit {
   }
 
   private initializeIngredientForms(): void {
-    this.magicalIngredients.forEach(ingredient => {
+    this.magicalIngredients.forEach((ingredient) => {
       const ingredientGroup = this.fb.group({
         id: [ingredient.id.toString()],
         name: [ingredient.name],
@@ -78,7 +90,7 @@ export class IngredientsTable implements OnInit {
       'bg-green-200 text-green-700': key === 'uncommon',
       'bg-blue-200 text-blue-700': key === 'rare',
       'bg-purple-200 text-purple-700': key === 'veryRare',
-      'bg-orange-200 text-orange-700': key === 'legendary'
+      'bg-orange-200 text-orange-700': key === 'legendary',
     };
   }
 
@@ -91,7 +103,7 @@ export class IngredientsTable implements OnInit {
   }
 
   public get selectedIngredients(): FormGroup[] {
-    return this.ingredientsControls.filter(group => group.get('selected')?.value === true);
+    return this.ingredientsControls.filter((group) => group.get('selected')?.value === true);
   }
 
   public onSelectionChange(index: number): void {
@@ -102,12 +114,14 @@ export class IngredientsTable implements OnInit {
       group.get('percent')?.setValue(null);
       group.get('percent')?.clearValidators();
     } else {
-      group.get('percent')?.setValidators([
-        Validators.required,
-        Validators.min(0.01),
-        Validators.max(100),
-        Validators.pattern(/^(?!0\d)\d{1,3}(\.\d+)?$/),
-      ]);
+      group
+        .get('percent')
+        ?.setValidators([
+          Validators.required,
+          Validators.min(0.01),
+          Validators.max(100),
+          Validators.pattern(/^(?!0\d)\d{1,3}(\.\d+)?$/),
+        ]);
     }
     group.get('percent')?.updateValueAndValidity();
   }
@@ -123,7 +137,7 @@ export class IngredientsTable implements OnInit {
     return this.selectedIngredients.reduce((sum, group) => {
       const price = Number(group.get('price')?.value) || 0;
       const percent = Number(group.get('percent')?.value) || 0;
-      return sum + (price * percent / 100);
+      return sum + (price * percent) / 100;
     }, 0);
   }
 
@@ -132,34 +146,44 @@ export class IngredientsTable implements OnInit {
     const selectedCount = this.selectedIngredients.length;
 
     if (selectedCount < 3) {
-      errors.push(this.translateService.instant('ingredientsTable.errors.minIngredients', { count: selectedCount }));
+      errors.push(
+        this.translateService.instant('ingredientsTable.errors.minIngredients', {
+          count: selectedCount,
+        }),
+      );
     }
 
     if (selectedCount > 0 && this.totalPercent !== 100) {
-      errors.push(this.translateService.instant('ingredientsTable.errors.totalPercent', { percent: this.totalPercent }));
+      errors.push(
+        this.translateService.instant('ingredientsTable.errors.totalPercent', {
+          percent: this.totalPercent,
+        }),
+      );
     }
 
     return errors;
   }
 
   public get hasInvalidPercentages(): boolean {
-    return this.selectedIngredients.some(group => {
+    return this.selectedIngredients.some((group) => {
       const percentControl = group.get('percent');
       return !percentControl?.value || percentControl?.invalid;
     });
   }
 
   public get canSaveOrder(): boolean {
-    return this.tableErrors.length === 0 &&
-           this.selectedIngredients.length >= 3 &&
-           !this.hasInvalidPercentages;
+    return (
+      this.tableErrors.length === 0 &&
+      this.selectedIngredients.length >= 3 &&
+      !this.hasInvalidPercentages
+    );
   }
 
   public save(): void {
     this.form.markAllAsTouched();
 
     if (this.canSaveOrder) {
-      const ingredients: IngredientInterface[] = this.selectedIngredients.map(group => {
+      const ingredients: IngredientInterface[] = this.selectedIngredients.map((group) => {
         const value = group.getRawValue();
         return {
           id: value.id,

@@ -3,18 +3,18 @@ export enum Rarity {
   UNCOMMON = 'uncommon',
   RARE = 'rare',
   VERY_RARE = 'veryRare',
-  LEGENDARY = 'legendary'
+  LEGENDARY = 'legendary',
 }
 
 export enum DeliveryMethod {
   COURIER = 'courier',
   PICKUP = 'pickup',
-  POST = 'post'
+  POST = 'post',
 }
 
 export enum PaymentMethod {
   CASH = 'cash',
   CARD = 'card',
   ONLINE = 'online',
-  CRYPTO = 'crypto'
+  CRYPTO = 'crypto',
 }

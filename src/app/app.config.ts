@@ -18,7 +18,7 @@ export const appConfig: ApplicationConfig = {
     }),
     provideTranslateHttpLoader({
       prefix: './assets/i18n/',
-      suffix: '.json'
+      suffix: '.json',
     }),
     providePrimeNG({
       theme: {
@@ -26,8 +26,8 @@ export const appConfig: ApplicationConfig = {
         options: {
           darkModeSelector: false,
         },
-      }
+      },
     }),
-    provideClientHydration(withEventReplay())
-  ]
+    provideClientHydration(withEventReplay()),
+  ],
 };

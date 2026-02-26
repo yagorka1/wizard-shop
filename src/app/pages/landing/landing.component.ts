@@ -8,6 +8,4 @@ import { LanguageSelectorComponent } from '../../components/language-selector/la
   imports: [RouterModule, TranslatePipe, LanguageSelectorComponent],
   templateUrl: './landing.component.html',
 })
-export class LandingComponent {
-
-}
+export class LandingComponent {}

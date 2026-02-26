@@ -7,7 +7,7 @@ import {
   FormGroup,
   FormGroupDirective,
   FormsModule,
-  NG_VALUE_ACCESSOR
+  NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FloatLabel } from 'primeng/floatlabel';
@@ -52,23 +52,23 @@ export class InputSelectComponent implements ControlValueAccessor {
     /* empty */
   };
 
-  public writeValue(value: any): void {
+  public writeValue(value: string | null): void {
     this.value = value;
   }
 
-  public registerOnChange(fn: any): void {
+  public registerOnChange(fn: (value: string | null) => void): void {
     this.onChange = fn;
   }
 
-  public onChange = (value: any) => {
+  public onChange: (value: string | null) => void = () => {
     /* empty */
   };
 
-  public registerOnTouched(fn: any): void {
+  public registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
-  onSelectionChange(value: any): void {
+  onSelectionChange(value: string | null): void {
     this.value = value;
     this.onChange(value);
   }
@@ -76,8 +76,8 @@ export class InputSelectComponent implements ControlValueAccessor {
   public get formControl(): FormControl | null {
     return this.controlContainer.formDirective
       ? (((this.controlContainer.formDirective as FormGroupDirective).form as FormGroup)?.get(
-        this.formControlName,
-      ) as FormControl)
+          this.formControlName,
+        ) as FormControl)
       : null;
   }
 
@@ -93,9 +93,9 @@ export class InputSelectComponent implements ControlValueAccessor {
     return this.isFormControlError && !!this.formControl?.touched && this.formControl?.invalid;
   }
 
-  public get errorMessages(): { key: string, params?: any }[] {
+  public get errorMessages(): { key: string; params?: Record<string, unknown> }[] {
     if (this.isFormControlError && this.formControl?.touched && this.formControl?.invalid) {
-      const errors: { key: string, params?: any }[] = [];
+      const errors: { key: string; params?: Record<string, unknown> }[] = [];
 
       const controlErrors = this.formControl.errors || {};
 

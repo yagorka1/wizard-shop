@@ -15,7 +15,18 @@ import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-orders-page',
-  imports: [TagModule, TableModule, RatingModule, CommonModule, FormsModule, ButtonModule, ToastModule, Card, RouterLink, TranslatePipe],
+  imports: [
+    TagModule,
+    TableModule,
+    RatingModule,
+    CommonModule,
+    FormsModule,
+    ButtonModule,
+    ToastModule,
+    Card,
+    RouterLink,
+    TranslatePipe,
+  ],
   templateUrl: './orders-page.component.html',
   providers: [MessageService],
   styleUrl: './orders-page.component.css',

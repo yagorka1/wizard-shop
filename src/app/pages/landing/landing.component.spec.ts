@@ -1,6 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { LandingComponent } from './landing.component';
 
 describe('LandingComponent', () => {
@@ -9,7 +10,7 @@ describe('LandingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LandingComponent],
+      imports: [LandingComponent, TranslateModule.forRoot()],
       providers: [provideRouter([])],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();

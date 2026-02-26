@@ -13,14 +13,14 @@ interface Language {
   standalone: true,
   imports: [SelectModule, FormsModule],
   templateUrl: './language-selector.component.html',
-  styleUrl: './language-selector.component.scss'
+  styleUrl: './language-selector.component.scss',
 })
 export class LanguageSelectorComponent {
   private translateService = inject(TranslateService);
 
   languages: Language[] = [
     { code: 'en', name: 'English' },
-    { code: 'ru', name: 'Русский' }
+    { code: 'ru', name: 'Русский' },
   ];
 
   selectedLanguage: string = 'en';

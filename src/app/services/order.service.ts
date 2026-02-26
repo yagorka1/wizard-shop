@@ -1,9 +1,9 @@
-import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
-import { OrderInterface } from '../core/interfaces/order.interface';
 import { isPlatformBrowser } from '@angular/common';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { OrderInterface } from '../core/interfaces/order.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrderService {
   private localStorageKey = 'orders';

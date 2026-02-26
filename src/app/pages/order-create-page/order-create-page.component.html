@@ -1,10 +1,7 @@
 @if (step === steps.ORDER) {
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="flex items-center justify-center min-h-screen">
-      <p-card
-        class="mb-0 w-[90%] sm:w-full max-w-xl rounded-xl"
-      >
-
+      <p-card class="mb-0 w-[90%] sm:w-full max-w-xl rounded-xl">
         <ng-template pTemplate="header">
           <div class="flex items-center justify-between w-full p-6">
             <span class="text-xl font-semibold">
@@ -21,15 +18,35 @@
         </ng-template>
 
         <div class="flex flex-col gap-3">
-          <app-input class="w-full" [label]="'orderCreate.labels.potionNumber' | translate" formControlName="number"></app-input>
+          <app-input
+            class="w-full"
+            [label]="'orderCreate.labels.potionNumber' | translate"
+            formControlName="number"
+          ></app-input>
 
-          <app-input class="w-full" [label]="'orderCreate.labels.customerName' | translate" formControlName="name"></app-input>
+          <app-input
+            class="w-full"
+            [label]="'orderCreate.labels.customerName' | translate"
+            formControlName="name"
+          ></app-input>
 
-          <app-input-date class="w-full" [label]="'orderCreate.labels.orderDate' | translate" formControlName="date"></app-input-date>
+          <app-input-date
+            class="w-full"
+            [label]="'orderCreate.labels.orderDate' | translate"
+            formControlName="date"
+          ></app-input-date>
 
-          <app-input-date class="w-full" [label]="'orderCreate.labels.readyDate' | translate" formControlName="readyDate"></app-input-date>
+          <app-input-date
+            class="w-full"
+            [label]="'orderCreate.labels.readyDate' | translate"
+            formControlName="readyDate"
+          ></app-input-date>
 
-          <app-input class="w-full" [label]="'orderCreate.labels.deliveryAddress' | translate" formControlName="address"></app-input>
+          <app-input
+            class="w-full"
+            [label]="'orderCreate.labels.deliveryAddress' | translate"
+            formControlName="address"
+          ></app-input>
 
           <app-input-select
             class="w-full"
@@ -46,8 +63,13 @@
           ></app-input-select>
         </div>
 
-        <p-button type="submit" [disabled]="isShowExplosion" severity="success" class="block mt-6"
-                  [label]="'orderCreate.selectIngredients' | translate"/>
+        <p-button
+          type="submit"
+          [disabled]="isShowExplosion"
+          severity="success"
+          class="block mt-6"
+          [label]="'orderCreate.selectIngredients' | translate"
+        />
       </p-card>
     </div>
   </form>
@@ -62,9 +84,5 @@
 }
 
 @if (isShowExplosion) {
-  <img
-    src="assets/explosion.gif"
-    class="explosion"
-    alt="Explosion"
-  />
+  <img src="assets/explosion.gif" class="explosion" alt="Explosion" />
 }

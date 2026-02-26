@@ -2,9 +2,9 @@
   <p-card class="mb-0 w-full max-w-[1200px] rounded-xl relative">
     <ng-template pTemplate="header">
       <div class="flex items-center justify-between w-full p-6">
-      <span class="text-xl font-semibold">
-       {{ 'ingredientsTable.title' | translate }}
-      </span>
+        <span class="text-xl font-semibold">
+          {{ 'ingredientsTable.title' | translate }}
+        </span>
 
         <p-button
           severity="secondary"
@@ -16,15 +16,19 @@
     </ng-template>
 
     <ng-container [formGroup]="form">
-      <p-table [value]="ingredientsControls" [tableStyle]="{'min-width': '60rem'}" class="h-[50vh] overflow-y-auto">
+      <p-table
+        [value]="ingredientsControls"
+        [tableStyle]="{ 'min-width': '60rem' }"
+        class="h-[50vh] overflow-y-auto"
+      >
         <ng-template pTemplate="header">
           <tr>
-            <th style="width:5%">{{ 'ingredientsTable.table.select' | translate }}</th>
-            <th style="width:20%">{{ 'ingredientsTable.table.name' | translate }}</th>
-            <th style="width:12%">{{ 'ingredientsTable.table.rarity' | translate }}</th>
-            <th style="width:25%">{{ 'ingredientsTable.table.effect' | translate }}</th>
-            <th style="width:12%">{{ 'ingredientsTable.table.pricePer100g' | translate }}</th>
-            <th style="width:15%">{{ 'ingredientsTable.table.percent' | translate }}</th>
+            <th style="width: 5%">{{ 'ingredientsTable.table.select' | translate }}</th>
+            <th style="width: 20%">{{ 'ingredientsTable.table.name' | translate }}</th>
+            <th style="width: 12%">{{ 'ingredientsTable.table.rarity' | translate }}</th>
+            <th style="width: 25%">{{ 'ingredientsTable.table.effect' | translate }}</th>
+            <th style="width: 12%">{{ 'ingredientsTable.table.pricePer100g' | translate }}</th>
+            <th style="width: 15%">{{ 'ingredientsTable.table.percent' | translate }}</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-group let-ri="rowIndex">
@@ -42,7 +46,7 @@
             </td>
 
             <td class="align-middle">
-              <span 
+              <span
                 class="px-2 py-1 rounded text-xs font-medium"
                 [ngClass]="getRarityClass(group.get('rarity')?.value)"
               >
@@ -55,11 +59,11 @@
             </td>
 
             <td class="align-middle">
-              {{ group.get('price')?.value | number:'1.2-2' }} {{ 'currency' | translate }}
+              {{ group.get('price')?.value | number: '1.2-2' }} {{ 'currency' | translate }}
             </td>
 
             <td class="align-middle">
-              <div class="input-wrapper" style="min-height: 32px;">
+              <div class="input-wrapper" style="min-height: 32px">
                 @if (group.get('selected')?.value) {
                   <app-input formControlName="percent" placeholder="%" type="number"></app-input>
                 } @else {
@@ -76,12 +80,20 @@
 
     <div class="mt-6 p-4 bg-gray-100 rounded-lg">
       <div class="flex justify-between items-center flex-wrap gap-4">
-        <span class="font-medium">{{ 'ingredientsTable.summary.selectedIngredients' | translate }}: {{ selectedIngredients.length }}</span>
-        <span class="font-medium" [class.text-green-600]="totalPercent === 100" [class.text-red-600]="totalPercent !== 100">
+        <span class="font-medium"
+          >{{ 'ingredientsTable.summary.selectedIngredients' | translate }}:
+          {{ selectedIngredients.length }}</span
+        >
+        <span
+          class="font-medium"
+          [class.text-green-600]="totalPercent === 100"
+          [class.text-red-600]="totalPercent !== 100"
+        >
           {{ 'ingredientsTable.summary.totalPercent' | translate }}: {{ totalPercent }}%
         </span>
         <span class="font-medium text-blue-600">
-          {{ 'ingredientsTable.summary.total' | translate }}: {{ totalPrice | number:'1.2-2' }} {{ 'currency' | translate }}
+          {{ 'ingredientsTable.summary.total' | translate }}: {{ totalPrice | number: '1.2-2' }}
+          {{ 'currency' | translate }}
         </span>
       </div>
     </div>

@@ -11,7 +11,7 @@ describe('minIngredientsValidator', () => {
   it('should return null for non-FormArray controls', () => {
     const control = new FormControl('test');
     const validator = minIngredientsValidator(3);
-    
+
     expect(validator(control)).toBeNull();
   });
 
@@ -39,10 +39,7 @@ describe('minIngredientsValidator', () => {
   });
 
   it('should return error if FormArray has less than minimum items', () => {
-    const formArray = fb.array([
-      fb.group({ name: 'Item 1' }),
-      fb.group({ name: 'Item 2' }),
-    ]);
+    const formArray = fb.array([fb.group({ name: 'Item 1' }), fb.group({ name: 'Item 2' })]);
     const validator = minIngredientsValidator(3);
 
     expect(validator(formArray)).toEqual({
@@ -60,10 +57,8 @@ describe('minIngredientsValidator', () => {
   });
 
   it('should work with different minimum values', () => {
-    const formArray = fb.array([
-      fb.group({ name: 'Item 1' }),
-    ]);
-    
+    const formArray = fb.array([fb.group({ name: 'Item 1' })]);
+
     expect(minIngredientsValidator(1)(formArray)).toBeNull();
     expect(minIngredientsValidator(2)(formArray)).toEqual({
       minIngredients: { required: 2, actual: 1 },
