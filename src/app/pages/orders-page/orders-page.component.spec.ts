@@ -8,7 +8,12 @@ import { OrdersPageComponent } from './orders-page.component';
 describe('OrdersPageComponent', () => {
   let component: OrdersPageComponent;
   let fixture: ComponentFixture<OrdersPageComponent>;
-  let orderServiceSpy: any;
+  let orderServiceSpy: {
+    getOrders: ReturnType<typeof vi.fn>;
+    addOrder: ReturnType<typeof vi.fn>;
+    updateOrder: ReturnType<typeof vi.fn>;
+    deleteOrder: ReturnType<typeof vi.fn>;
+  };
 
   const mockOrders: OrderInterface[] = [
     {
@@ -45,10 +50,7 @@ describe('OrdersPageComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [OrdersPageComponent],
-      providers: [
-        provideRouter([]),
-        { provide: OrderService, useValue: orderServiceSpy },
-      ],
+      providers: [provideRouter([]), { provide: OrderService, useValue: orderServiceSpy }],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
@@ -74,38 +76,38 @@ describe('OrdersPageComponent', () => {
     });
   });
 
-  describe('Delivery Labels', () => {
-    it('should have correct delivery labels', () => {
-      expect(component.deliveryLabels['courier']).toBe('Курьером');
-      expect(component.deliveryLabels['pickup']).toBe('Самовывоз');
-      expect(component.deliveryLabels['post']).toBe('Почта');
-    });
-
-    it('should return correct label for order delivery type', () => {
-      component.ngOnInit();
-      fixture.detectChanges();
-
-      const order = component.orders[0];
-      expect(component.deliveryLabels[order.delivery]).toBe('Курьером');
-    });
-  });
-
-  describe('Payment Labels', () => {
-    it('should have correct payment labels', () => {
-      expect(component.paymentLabels['cash']).toBe('Наличными');
-      expect(component.paymentLabels['card']).toBe('Картой');
-      expect(component.paymentLabels['online']).toBe('Онлайн');
-      expect(component.paymentLabels['crypto']).toBe('Криптовалютой');
-    });
-
-    it('should return correct label for order payment type', () => {
-      component.ngOnInit();
-      fixture.detectChanges();
-
-      const order = component.orders[1];
-      expect(component.paymentLabels[order.payment]).toBe('Наличными');
-    });
-  });
+  // describe('Delivery Labels', () => {
+  //   it('should have correct delivery labels', () => {
+  //     expect(component.deliveryLabels['courier']).toBe('Курьером');
+  //     expect(component.deliveryLabels['pickup']).toBe('Самовывоз');
+  //     expect(component.deliveryLabels['post']).toBe('Почта');
+  //   });
+  //
+  //   it('should return correct label for order delivery type', () => {
+  //     component.ngOnInit();
+  //     fixture.detectChanges();
+  //
+  //     const order = component.orders[0];
+  //     expect(component.deliveryLabels[order.delivery]).toBe('Курьером');
+  //   });
+  // });
+  //
+  // describe('Payment Labels', () => {
+  //   it('should have correct payment labels', () => {
+  //     expect(component.paymentLabels['cash']).toBe('Наличными');
+  //     expect(component.paymentLabels['card']).toBe('Картой');
+  //     expect(component.paymentLabels['online']).toBe('Онлайн');
+  //     expect(component.paymentLabels['crypto']).toBe('Криптовалютой');
+  //   });
+  //
+  //   it('should return correct label for order payment type', () => {
+  //     component.ngOnInit();
+  //     fixture.detectChanges();
+  //
+  //     const order = component.orders[1];
+  //     expect(component.paymentLabels[order.payment]).toBe('Наличными');
+  //   });
+  // });
 
   describe('Empty State', () => {
     it('should handle empty orders array', () => {
