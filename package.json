@@ -8,7 +8,19 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:wizard-shop": "node dist/wizard-shop/server/server.mjs",
-    "build:ssr:wizard-shop": "ng build wizard-shop && ng run wizard-shop:server"
+    "build:ssr:wizard-shop": "ng build wizard-shop && ng run wizard-shop:server",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.scss": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "**/*": "prettier --write --ignore-unknown"
   },
   "prettier": {
     "printWidth": 100,
@@ -47,11 +59,19 @@
     "@angular/build": "^21.0.5",
     "@angular/cli": "^21.0.5",
     "@angular/compiler-cli": "^21.1.2",
+    "@commitlint/cli": "^20.4.2",
+    "@commitlint/config-conventional": "^20.4.2",
     "@tailwindcss/postcss": "^4.1.12",
     "@types/express": "^5.0.1",
     "@types/node": "^20.17.19",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
+    "eslint": "^8.57.1",
+    "husky": "^9.1.7",
     "jsdom": "^27.1.0",
+    "lint-staged": "^16.2.7",
     "postcss": "^8.5.3",
+    "prettier": "^3.8.1",
     "tailwindcss": "^4.1.12",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
