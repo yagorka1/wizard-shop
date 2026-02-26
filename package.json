@@ -9,7 +9,11 @@
     "test": "ng test",
     "serve:ssr:wizard-shop": "node dist/wizard-shop/server/server.mjs",
     "build:ssr:wizard-shop": "ng build wizard-shop && ng run wizard-shop:server",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint": "eslint \"src/**/*.ts\" --max-warnings=0",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
+    "format:check": "prettier --check \"src/**/*.{ts,html,scss}\"",
+    "test:ci": "vitest run"
   },
   "lint-staged": {
     "*.ts": [
